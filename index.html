@@ -269,6 +269,66 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
 }
 
 /* ═══════════════════════════════════════════════
+   8b. CENOVNIK
+   ═══════════════════════════════════════════════ */
+#cen-tabs{
+  display:flex; gap:1.5rem; justify-content:flex-start;
+  border-bottom:1px solid var(--bez-200); margin-bottom:2.5rem;
+  overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+}
+#cen-tabs::-webkit-scrollbar{ display:none; }
+@media (min-width:768px){ #cen-tabs{ flex-wrap:wrap; gap:2rem; justify-content:center; } }
+
+.cen-grupa{ margin-bottom:3rem; }
+.cen-grupa:last-child{ margin-bottom:0; }
+.cen-grupa-head{ display:flex; align-items:baseline; gap:1rem; margin-bottom:.25rem; }
+.cen-grupa-head h3{ font-size:1.5rem; }
+@media (min-width:768px){ .cen-grupa-head h3{ font-size:1.75rem; } }
+.cen-grupa-head .hairline{ flex:1; }
+.cen-grupa-note{
+  font-size:.8125rem; color:var(--antracit-muted); line-height:1.7;
+  margin:.5rem 0 1.5rem;
+}
+
+.cen-lista{ display:flex; flex-direction:column; }
+.cen-red{
+  display:flex; align-items:flex-start; gap:1rem;
+  padding:1.1rem .25rem; border-bottom:1px solid var(--bez-200);
+  transition:background-color .35s ease, padding-left .35s ease;
+}
+.cen-red:hover{ background:var(--white); padding-left:.75rem; }
+.cen-red-info{ flex:1; min-width:0; }
+.cen-red-info h4{
+  font-family:var(--f-sans); font-weight:500; font-size:.9375rem;
+  line-height:1.4; margin-bottom:.3rem;
+}
+.cen-red-info p{
+  font-size:.8125rem; color:var(--antracit-muted); line-height:1.6; margin:0;
+}
+.cen-red-meta{ text-align:right; flex-shrink:0; }
+.cen-red-meta .cen-cena{
+  font-family:var(--f-display); font-size:1.375rem; font-weight:500;
+  color:var(--braon); line-height:1.1; white-space:nowrap;
+}
+.cen-red-meta .cen-tr{
+  display:block; font-size:.6875rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--antracit-muted); margin-top:.35rem; white-space:nowrap;
+}
+.cen-badge{
+  display:inline-block; font-size:.625rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--zelena); border:1px solid var(--zelena-light);
+  padding:.15rem .45rem; margin-left:.5rem; vertical-align:middle;
+}
+
+.cen-foot{
+  margin-top:3rem; padding:1.75rem; background:var(--bez-100);
+  border-left:2px solid var(--zelena-light);
+}
+.cen-foot p{ font-size:.8125rem; color:var(--antracit-soft); line-height:1.75; }
+.cen-foot p + p{ margin-top:.6rem; }
+.cen-cta{ margin-top:2.5rem; text-align:center; }
+
+/* ═══════════════════════════════════════════════
    9. GALERIJA
    ═══════════════════════════════════════════════ */
 .gal-head{ display:flex; flex-direction:column; gap:1.5rem; margin-bottom:2.5rem; }
@@ -787,6 +847,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
     <nav class="nav-links">
       <a href="#pocetna" data-i18n="nav.home">Početna</a>
       <a href="#usluge" data-i18n="nav.services">Usluge</a>
+      <a href="#cenovnik" data-i18n="nav.price">Cenovnik</a>
       <a href="#galerija" data-i18n="nav.gallery">Galerija</a>
       <a href="#o-nama" data-i18n="nav.about">O nama</a>
       <a href="#blog" data-i18n="nav.blog">Blog</a>
@@ -819,6 +880,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
     <div class="mobmenu-inner">
       <a href="#pocetna" data-i18n="nav.home">Početna</a>
       <a href="#usluge" data-i18n="nav.services">Usluge</a>
+      <a href="#cenovnik" data-i18n="nav.price">Cenovnik</a>
       <a href="#galerija" data-i18n="nav.gallery">Galerija</a>
       <a href="#o-nama" data-i18n="nav.about">O nama</a>
       <a href="#blog" data-i18n="nav.blog">Blog</a>
@@ -878,6 +940,29 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
       <h2 data-i18n="services.title">Četiri načina da vam vratimo sat vremena dnevno — i mir u glavi</h2>
     </div>
     <div class="usluge-grid" id="usluge-grid"></div>
+  </div>
+</section>
+
+<!-- ══════════ CENOVNIK ══════════ -->
+<section id="cenovnik" class="section section--bez">
+  <div class="wrap-sm">
+    <div class="sec-head fade-up">
+      <p class="eyebrow" data-i18n="price.eyebrow">Cenovnik</p>
+      <h2 data-i18n="price.title">Cene znate pre nego što sednete u stolicu</h2>
+      <p class="lead" style="margin-top:1rem" data-i18n="price.lead">Bez skrivenih doplata. Konsultacija je uvek besplatna, a tačnu cenu potvrđujemo pre početka tretmana.</p>
+    </div>
+
+    <div id="cen-tabs"></div>
+    <div id="cen-sadrzaj"></div>
+
+    <div class="cen-foot fade-up">
+      <p data-i18n="price.note1">Sve cene su izražene u dinarima (RSD) i uključuju PDV. Plaćanje: gotovina, kartica ili prenos.</p>
+      <p data-i18n="price.note2">Korekcija trajne šminke u roku od 45 dana je uključena u cenu prvog tretmana. Otkazivanje termina molimo najmanje 24 sata unapred.</p>
+    </div>
+
+    <div class="cen-cta fade-up">
+      <a href="#zakazivanje" class="btn btn--solid" data-i18n="price.cta">Zakaži termin</a>
+    </div>
   </div>
 </section>
 
@@ -1183,7 +1268,7 @@ const T = {
 sr:{
   "nav.home":"Početna", "nav.services":"Usluge", "nav.gallery":"Galerija",
   "nav.about":"O nama", "nav.blog":"Blog", "nav.location":"Lokacija",
-  "nav.book":"Zakaži", "nav.bookLong":"Zakaži termin",
+  "nav.book":"Zakaži", "nav.bookLong":"Zakaži termin", "nav.price":"Cenovnik",
 
   "hero.kicker":"Kragujevac · od 2018.",
   "hero.title":"Uđete umorni.<br><em>Izađete kao svoja</em><br>najbolja verzija.",
@@ -1204,6 +1289,49 @@ sr:{
   "srv.4.t":"Manikir & Pedikir",
   "srv.4.d":"Klasičan, gel, japanski. Ruke koje ne krijete kada nekome pružate vizit-kartu.",
   "srv.4.p":"od 1.800 RSD",
+
+  "price.eyebrow":"Cenovnik",
+  "price.title":"Cene znate pre nego što sednete u stolicu",
+  "price.lead":"Bez skrivenih doplata. Konsultacija je uvek besplatna, a tačnu cenu potvrđujemo pre početka tretmana.",
+  "price.note1":"Sve cene su izražene u dinarima (RSD) i uključuju PDV. Plaćanje: gotovina, kartica ili prenos.",
+  "price.note2":"Korekcija trajne šminke u roku od 45 dana je uključena u cenu prvog tretmana. Otkazivanje termina molimo najmanje 24 sata unapred.",
+  "price.cta":"Zakaži termin",
+  "price.all":"Sve usluge",
+  "price.dur":"trajanje",
+  "price.popular":"Najtraženije",
+  "price.from":"od",
+
+  "pg.sminka.n":"Cena uključuje konsultaciju, pigment, anesteziju i prvu korekciju u roku od 45 dana.",
+  "p.s1.t":"Puder obrve", "p.s1.d":"Meki, prirodan finiš — najtraženija tehnika u salonu.", "p.s1.c":"22.000", "p.s1.v":"150 min",
+  "p.s2.t":"Kombinovane obrve", "p.s2.d":"Puder tehnika sa dodatim dlačicama za maksimalnu prirodnost.", "p.s2.c":"26.000", "p.s2.v":"180 min",
+  "p.s3.t":"Lip blush — usne", "p.s3.d":"Nijansiranje i definisanje kontura, bez efekta „nacrtane“ linije.", "p.s3.c":"24.000", "p.s3.v":"150 min",
+  "p.s4.t":"Trajni ajlajner", "p.s4.d":"Tanka linija uz trepavice ili blago produžena — po dogovoru.", "p.s4.c":"18.000", "p.s4.v":"120 min",
+  "p.s5.t":"Korekcija (do 12 meseci)", "p.s5.d":"Osvežavanje postojećeg rada urađenog kod nas.", "p.s5.c":"9.000", "p.s5.v":"90 min",
+  "p.s6.t":"Uklanjanje starog pigmenta", "p.s6.d":"Remover tretman, cena po seansi. Broj seansi zavisi od nalaza.", "p.s6.c":"7.500", "p.s6.v":"60 min",
+
+  "pg.spa.n":"Svi tretmani uključuju korišćenje saune i prostora za odmor pre i posle termina.",
+  "p.p1.t":"Relax masaža celog tela", "p.p1.d":"Klasična masaža sa toplim uljem, srednji pritisak.", "p.p1.c":"3.500", "p.p1.v":"60 min",
+  "p.p2.t":"Sportska masaža", "p.p2.d":"Dubinski rad na leđima, ramenima i nogama.", "p.p2.c":"4.200", "p.p2.v":"60 min",
+  "p.p3.t":"Anticelulit tretman", "p.p3.d":"Preporučuje se serija od 10 tretmana — paket 32.000 RSD.", "p.p3.c":"3.800", "p.p3.v":"45 min",
+  "p.p4.t":"Masaža toplim kamenjem", "p.p4.d":"Bazalt kamenje, duboka relaksacija mišića.", "p.p4.c":"4.800", "p.p4.v":"75 min",
+  "p.p5.t":"LUX paket za dvoje", "p.p5.d":"Masaža, sauna, džakuzi i posluženje — za dve osobe.", "p.p5.c":"14.000", "p.p5.v":"150 min",
+  "p.p6.t":"Sauna & džakuzi", "p.p6.d":"Zakup prostora, do dve osobe.", "p.p6.c":"2.500", "p.p6.v":"60 min",
+  "p.p7.t":"Tretman lica — hidratacija", "p.p7.d":"Čišćenje, piling, maska i serum prema tipu kože.", "p.p7.c":"4.500", "p.p7.v":"60 min",
+
+  "pg.nokti.n":"Skidanje starog gela je besplatno uz zakazan novi tretman kod nas.",
+  "p.n1.t":"Klasičan manikir", "p.n1.d":"Oblikovanje, zanoktice, nega i lak.", "p.n1.c":"1.800", "p.n1.v":"45 min",
+  "p.n2.t":"Gel lak na prirodan nokat", "p.n2.d":"Traje 3–4 nedelje, preko 200 nijansi.", "p.n2.c":"2.600", "p.n2.v":"60 min",
+  "p.n3.t":"Nadogradnja noktiju", "p.n3.d":"Gel ili akril, sa oblikovanjem po želji.", "p.n3.c":"3.900", "p.n3.v":"105 min",
+  "p.n4.t":"Japanski manikir", "p.n4.d":"Nega i pojačavanje slabih, lomljivih noktiju.", "p.n4.c":"2.400", "p.n4.v":"50 min",
+  "p.n5.t":"Klasičan pedikir", "p.n5.d":"Uključuje kupku, piling i negu stopala.", "p.n5.c":"2.500", "p.n5.v":"60 min",
+  "p.n6.t":"Medicinski pedikir", "p.n6.d":"Urasli nokti, kurje oči, ispucale pete.", "p.n6.c":"3.600", "p.n6.v":"75 min",
+  "p.n7.t":"Nail art (po noktu)", "p.n7.d":"Ručno slikanje, kamenčići, francuska varijanta.", "p.n7.c":"250", "p.n7.v":"5 min",
+
+  "pg.edu.n":"Grupe do 4 polaznika. Cena uključuje kompletan startni set, materijal, model i podršku 6 meseci posle kursa.",
+  "p.e1.t":"Osnovni kurs — puder obrve", "p.e1.d":"5 dana, teorija i rad na modelima. Sertifikat.", "p.e1.c":"120.000", "p.e1.v":"5 dana",
+  "p.e2.t":"Napredni kurs — usne i ajlajner", "p.e2.d":"Za polaznike sa prethodnim iskustvom.", "p.e2.c":"95.000", "p.e2.v":"3 dana",
+  "p.e3.t":"Kurs manikira i gel tehnika", "p.e3.d":"4 dana, od pripreme nokta do nadogradnje.", "p.e3.c":"65.000", "p.e3.v":"4 dana",
+  "p.e4.t":"Individualna konsultacija", "p.e4.d":"Rad jedan na jedan, tema po vašem izboru.", "p.e4.c":"8.000", "p.e4.v":"90 min",
 
   "gallery.eyebrow":"Galerija", "gallery.title":"Radovi, ne obećanja",
   "gallery.note":"Sve fotografije su iz našeg salona. Kliknite na bilo koju da je vidite u punoj veličini.",
@@ -1262,7 +1390,7 @@ sr:{
 en:{
   "nav.home":"Home", "nav.services":"Services", "nav.gallery":"Gallery",
   "nav.about":"About Us", "nav.blog":"Blog", "nav.location":"Location",
-  "nav.book":"Book", "nav.bookLong":"Book an Appointment",
+  "nav.book":"Book", "nav.bookLong":"Book an Appointment", "nav.price":"Pricing",
 
   "hero.kicker":"Kragujevac · since 2018",
   "hero.title":"You walk in tired.<br><em>You leave as your</em><br>best self.",
@@ -1283,6 +1411,49 @@ en:{
   "srv.4.t":"Manicure & Pedicure",
   "srv.4.d":"Classic, gel, Japanese. Hands you don't hide when handing someone your card.",
   "srv.4.p":"from 1,800 RSD",
+
+  "price.eyebrow":"Pricing",
+  "price.title":"You know the price before you sit down",
+  "price.lead":"No hidden surcharges. The consultation is always free, and we confirm the exact price before the treatment begins.",
+  "price.note1":"All prices are in Serbian dinars (RSD) and include VAT. Payment: cash, card or bank transfer.",
+  "price.note2":"A permanent makeup touch-up within 45 days is included in the price of the first treatment. Please cancel appointments at least 24 hours in advance.",
+  "price.cta":"Book an Appointment",
+  "price.all":"All services",
+  "price.dur":"duration",
+  "price.popular":"Most booked",
+  "price.from":"from",
+
+  "pg.sminka.n":"The price includes the consultation, pigment, anaesthetic and the first touch-up within 45 days.",
+  "p.s1.t":"Powder brows", "p.s1.d":"Soft, natural finish — the most requested technique in the salon.", "p.s1.c":"22,000", "p.s1.v":"150 min",
+  "p.s2.t":"Combination brows", "p.s2.d":"Powder technique with added hair strokes for maximum realism.", "p.s2.c":"26,000", "p.s2.v":"180 min",
+  "p.s3.t":"Lip blush", "p.s3.d":"Shading and definition, without the drawn-on outline effect.", "p.s3.c":"24,000", "p.s3.v":"150 min",
+  "p.s4.t":"Permanent eyeliner", "p.s4.d":"A fine lash line or a slight wing — as agreed.", "p.s4.c":"18,000", "p.s4.v":"120 min",
+  "p.s5.t":"Touch-up (up to 12 months)", "p.s5.d":"Refreshing existing work done at our salon.", "p.s5.c":"9,000", "p.s5.v":"90 min",
+  "p.s6.t":"Old pigment removal", "p.s6.d":"Remover treatment, price per session. Number of sessions depends on assessment.", "p.s6.c":"7,500", "p.s6.v":"60 min",
+
+  "pg.spa.n":"All treatments include use of the sauna and the rest area before and after your appointment.",
+  "p.p1.t":"Full body relaxing massage", "p.p1.d":"Classic massage with warm oil, medium pressure.", "p.p1.c":"3,500", "p.p1.v":"60 min",
+  "p.p2.t":"Sports massage", "p.p2.d":"Deep tissue work on back, shoulders and legs.", "p.p2.c":"4,200", "p.p2.v":"60 min",
+  "p.p3.t":"Anti-cellulite treatment", "p.p3.d":"A course of 10 treatments is recommended — package 32,000 RSD.", "p.p3.c":"3,800", "p.p3.v":"45 min",
+  "p.p4.t":"Hot stone massage", "p.p4.d":"Basalt stones, deep muscle relaxation.", "p.p4.c":"4,800", "p.p4.v":"75 min",
+  "p.p5.t":"LUX package for two", "p.p5.d":"Massage, sauna, jacuzzi and refreshments — for two people.", "p.p5.c":"14,000", "p.p5.v":"150 min",
+  "p.p6.t":"Sauna & jacuzzi", "p.p6.d":"Private use of the space, up to two people.", "p.p6.c":"2,500", "p.p6.v":"60 min",
+  "p.p7.t":"Facial — hydration", "p.p7.d":"Cleansing, exfoliation, mask and serum matched to your skin.", "p.p7.c":"4,500", "p.p7.v":"60 min",
+
+  "pg.nokti.n":"Removal of old gel is free when you book a new treatment with us.",
+  "p.n1.t":"Classic manicure", "p.n1.d":"Shaping, cuticles, care and polish.", "p.n1.c":"1,800", "p.n1.v":"45 min",
+  "p.n2.t":"Gel polish on natural nails", "p.n2.d":"Lasts 3–4 weeks, over 200 shades available.", "p.n2.c":"2,600", "p.n2.v":"60 min",
+  "p.n3.t":"Nail extensions", "p.n3.d":"Gel or acrylic, shaped to your preference.", "p.n3.c":"3,900", "p.n3.v":"105 min",
+  "p.n4.t":"Japanese manicure", "p.n4.d":"Care and strengthening for weak, brittle nails.", "p.n4.c":"2,400", "p.n4.v":"50 min",
+  "p.n5.t":"Classic pedicure", "p.n5.d":"Includes soak, exfoliation and foot care.", "p.n5.c":"2,500", "p.n5.v":"60 min",
+  "p.n6.t":"Medical pedicure", "p.n6.d":"Ingrown nails, corns, cracked heels.", "p.n6.c":"3,600", "p.n6.v":"75 min",
+  "p.n7.t":"Nail art (per nail)", "p.n7.d":"Hand painting, crystals, French finish.", "p.n7.c":"250", "p.n7.v":"5 min",
+
+  "pg.edu.n":"Groups of up to 4 students. The price includes a full starter kit, materials, a model and 6 months of support after the course.",
+  "p.e1.t":"Beginner course — powder brows", "p.e1.d":"5 days, theory and work on models. Certificate included.", "p.e1.c":"120,000", "p.e1.v":"5 days",
+  "p.e2.t":"Advanced course — lips and eyeliner", "p.e2.d":"For students with previous experience.", "p.e2.c":"95,000", "p.e2.v":"3 days",
+  "p.e3.t":"Manicure and gel techniques course", "p.e3.d":"4 days, from nail prep to extensions.", "p.e3.c":"65,000", "p.e3.v":"4 days",
+  "p.e4.t":"One-to-one consultation", "p.e4.d":"Individual session on a topic of your choice.", "p.e4.c":"8,000", "p.e4.v":"90 min",
 
   "gallery.eyebrow":"Gallery", "gallery.title":"Results, not promises",
   "gallery.note":"Every photo is from our salon. Click any image to view it full size.",
@@ -1346,6 +1517,20 @@ const usluge = [
   {slika:'spa-tretman.png', k:'srv.2'},
   {slika:'edukacija.png',   k:'srv.3'},
   {slika:'manikir.png',     k:'srv.4'}
+];
+
+/* ── CENOVNIK ──
+   Za izmenu cene: promenite vrednost ključa "p.X.c" u T (sr i en).
+   Za novu stavku: dodajte {k:'p.X'} ovde + ključe p.X.t / p.X.d / p.X.c / p.X.v u T. */
+const cenovnik = [
+  { id:'sminka',    ck:'cat.sminka',    note:'pg.sminka.n', stavke:[
+      {k:'p.s1', hit:true}, {k:'p.s2'}, {k:'p.s3'}, {k:'p.s4'}, {k:'p.s5'}, {k:'p.s6'} ]},
+  { id:'spa',       ck:'cat.spa',       note:'pg.spa.n', stavke:[
+      {k:'p.p1'}, {k:'p.p2'}, {k:'p.p3'}, {k:'p.p4'}, {k:'p.p5', hit:true}, {k:'p.p6'}, {k:'p.p7'} ]},
+  { id:'nokti',     ck:'cat.nokti',     note:'pg.nokti.n', stavke:[
+      {k:'p.n1'}, {k:'p.n2', hit:true}, {k:'p.n3'}, {k:'p.n4'}, {k:'p.n5'}, {k:'p.n6'}, {k:'p.n7'} ]},
+  { id:'edukacije', ck:'cat.edukacije', note:'pg.edu.n', stavke:[
+      {k:'p.e1', hit:true}, {k:'p.e2'}, {k:'p.e3'}, {k:'p.e4'} ]}
 ];
 
 const galerija = [
@@ -1602,6 +1787,8 @@ function primeniJezik(){
   });
 
   renderUsluge();
+  renderCenTabove();
+  renderCenovnik();
   renderTabove();
   renderGaleriju(aktivnaKat);
   renderKartice();
@@ -1632,6 +1819,61 @@ function renderUsluge(){
       <p class="cena">${t(u.k+'.p')}</p>
     </article>`).join('');
 }
+
+/* ═══════════════════════════════════════════════════════════
+   CENOVNIK
+   ═══════════════════════════════════════════════════════════ */
+let cenKat = 'sve';
+
+function renderCenTabove(){
+  const el = document.getElementById('cen-tabs');
+  if(!el) return;
+  const kats = [{id:'sve', ck:'price.all'}].concat(cenovnik.map(g=>({id:g.id, ck:g.ck})));
+  el.innerHTML = kats.map(c=>`
+    <button type="button" class="tab${c.id===cenKat?' active':''}" data-cen="${c.id}">
+      ${t(c.ck)}<span class="tab-line"></span>
+    </button>`).join('');
+}
+
+function renderCenovnik(){
+  const el = document.getElementById('cen-sadrzaj');
+  if(!el) return;
+  const grupe = cenKat === 'sve' ? cenovnik : cenovnik.filter(g=>g.id===cenKat);
+
+  el.innerHTML = grupe.map(g=>`
+    <div class="cen-grupa">
+      <div class="cen-grupa-head">
+        <h3>${t(g.ck)}</h3>
+        <div class="hairline"></div>
+      </div>
+      <p class="cen-grupa-note">${t(g.note)}</p>
+      <div class="cen-lista">
+        ${g.stavke.map(s=>`
+          <div class="cen-red">
+            <div class="cen-red-info">
+              <h4>${t(s.k+'.t')}${s.hit?`<span class="cen-badge">${t('price.popular')}</span>`:''}</h4>
+              <p>${t(s.k+'.d')}</p>
+            </div>
+            <div class="cen-red-meta">
+              <span class="cen-cena">${t(s.k+'.c')} <span style="font-size:.75rem;letter-spacing:.1em">RSD</span></span>
+              <span class="cen-tr">${t(s.k+'.v')}</span>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+(function initCenTabs(){
+  const el = document.getElementById('cen-tabs');
+  if(!el) return;
+  el.addEventListener('click', e=>{
+    const b = e.target.closest('[data-cen]');
+    if(!b) return;
+    cenKat = b.dataset.cen;
+    renderCenTabove();
+    renderCenovnik();
+  });
+})();
 
 /* ═══════════════════════════════════════════════════════════
    GALERIJA
