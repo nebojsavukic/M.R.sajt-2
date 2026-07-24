@@ -2045,12 +2045,30 @@ function napraviJezik(naslov, tekst){
 }
 
 async function ucitajBlogoveIzTabele(){
+  console.log('Podaci se učitavaju...');
+  console.log('CSV URL:', BLOG_CSV_URL);
+
   try{
     const odg = await fetch(BLOG_CSV_URL);
+    console.log('Odgovor servera:', odg.status, odg.statusText);
+
     if(!odg.ok) throw new Error('HTTP ' + odg.status);
 
-    const redovi = parsirajCSV(await odg.text());
-    if(redovi.length < 2) return;               // samo zaglavlje ili prazno
+    const sirovo = await odg.text();
+    console.log('Preuzeto znakova:', sirovo.length);
+    console.log('Prvih 300 znakova:', sirovo.slice(0, 300));
+
+    const redovi = parsirajCSV(sirovo);
+    console.log(redovi);
+    console.log('Broj redova (sa zaglavljem):', redovi.length);
+
+    if(redovi.length < 2){
+      console.warn('Tabela nema nijedan red sa sadržajem ispod zaglavlja. ' +
+                   'Proverite naziv lista u sheet= parametru i da li je tabela objavljena.');
+      return;
+    }
+
+    console.log('Zaglavlje:', redovi[0]);
 
     const novi = redovi
       .slice(1)                                  // preskačemo red sa nazivima kolona
@@ -2080,13 +2098,21 @@ async function ucitajBlogoveIzTabele(){
         };
       });
 
-    if(!novi.length) return;
+    console.log('Validnih blogova iz tabele:', novi.length);
+
+    if(!novi.length){
+      console.warn('Redovi postoje, ali nijedan nema popunjenu kolonu "naslov".');
+      return;
+    }
 
     blogovi = blogovi.concat(novi);   // statički ostaju, novi se nadovezuju
+    console.log('Ukupno blogova na sajtu:', blogovi.length);
+
     renderBlog();
+    console.log('Blog sekcija je osvežena.');
   }catch(err){
     // Tabela nedostupna → sajt radi normalno sa statičkim blogovima.
-    console.warn('Blogovi iz tabele nisu učitani:', err);
+    console.error('Blogovi iz tabele nisu učitani:', err);
   }
 }
 
@@ -2420,8 +2446,17 @@ const io = new IntersectionObserver(es=>es.forEach(e=>{
 }),{threshold:.12});
 document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
 
-/* Blogovi iz Google tabele — učitavaju se posle prikaza stranice. */
-ucitajBlogoveIzTabele();
+/* Blogovi iz Google tabele.
+   Skripta je na kraju <body>, pa je DOM najčešće već spreman —
+   zato proveravamo readyState umesto da slepo čekamo DOMContentLoaded
+   (taj događaj je već prošao i callback se nikada ne bi pozvao). */
+console.log('Skripta je stigla do poziva za blogove. readyState:', document.readyState);
+
+if(document.readyState === 'loading'){
+  window.addEventListener('DOMContentLoaded', ucitajBlogoveIzTabele);
+} else {
+  ucitajBlogoveIzTabele();
+}
 </script>
 </body>
 </html>
