@@ -1559,7 +1559,7 @@ const kartice = [
 /* ═══════════ BLOG — DVOJEZIČNI TEKSTOVI ═══════════
    Za novi tekst: kopirajte jedan objekat i popunite sr i en.
    ═════════════════════════════════════════════════ */
-const blogovi = [
+let blogovi = [
 {
   slika:'blog-sters.png', vreme:'4',
   sr:{
@@ -1963,13 +1963,131 @@ function renderBlog(){
       <div class="post-meta">
         <span class="post-tag">${d.tag}</span>
         <span class="post-dash"></span>
-        <span class="post-time">${b.vreme} ${t('blog.min')}</span>
+        <span class="post-time">${(LANG==='en' && b.vremeEn) ? b.vremeEn : b.vreme} ${t('blog.min')}</span>
       </div>
       <h3>${d.naslov}</h3>
       <p class="post-excerpt">${d.uvod.slice(0,175)}…</p>
       <p class="post-more">${t('blog.read')} &#8594;</p>
     </article>`;
   }).join('');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BLOG IZ GOOGLE TABELE
+   Statički blogovi iznad OSTAJU. Ovo samo dodaje nove na kraj.
+
+   Da bi radilo: File → Share → Publish to web → izaberite list → Publish.
+   Ako se list zove drugačije od "Sheet1", promenite sheet= parametar dole.
+   ═══════════════════════════════════════════════════════════ */
+const BLOG_CSV_URL =
+  'https://docs.google.com/spreadsheets/d/1BbmWW5VcPiHweyckDzX7W40xHSjKTInv47QLgRpR1Vw/gviz/tq?tqx=out:csv&sheet=Sheet1';
+
+/* CSV parser — poštuje navodnike, zareze i prelome reda unutar ćelije.
+   Google uvek stavlja tekst pod navodnike, a dupli navodnik ("") znači jedan ". */
+function parsirajCSV(tekst){
+  const redovi = [];
+  let red = [], polje = '', uNavodnicima = false;
+
+  tekst = tekst.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+  for(let i = 0; i < tekst.length; i++){
+    const c = tekst[i];
+
+    if(uNavodnicima){
+      if(c === '"'){
+        if(tekst[i+1] === '"'){ polje += '"'; i++; }   // escaped navodnik
+        else uNavodnicima = false;
+      } else polje += c;
+    } else {
+      if(c === '"')      uNavodnicima = true;
+      else if(c === ','){ red.push(polje); polje = ''; }
+      else if(c === '\n'){ red.push(polje); redovi.push(red); red = []; polje = ''; }
+      else polje += c;
+    }
+  }
+  red.push(polje);
+  if(red.length > 1 || red[0] !== '') redovi.push(red);
+
+  return redovi;
+}
+
+/* Sprečava da HTML iz tabele razbije stranicu ili ubaci skriptu. */
+function ocisti(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+/* Tekst iz tabele → pasusi. Prazan red = novi pasus. */
+function uPasuse(tekst){
+  return String(tekst || '')
+    .split(/\n\s*\n/)
+    .map(p => p.trim())
+    .filter(Boolean)
+    .map(p => `<p>${ocisti(p).replace(/\n/g,'<br>')}</p>`)
+    .join('');
+}
+
+function procitajVremeCitanja(tekst){
+  const reci = String(tekst || '').trim().split(/\s+/).filter(Boolean).length;
+  return String(Math.max(1, Math.round(reci / 200)));
+}
+
+/* Od naslova i teksta pravi objekat koji renderBlog() očekuje. */
+function napraviJezik(naslov, tekst){
+  const uvod = tekst.replace(/\s+/g,' ').trim();
+  return {
+    tag:    'Blog',
+    naslov: naslov,
+    uvod:   uvod || naslov,
+    telo:   uPasuse(tekst) || `<p>${ocisti(naslov)}</p>`
+  };
+}
+
+async function ucitajBlogoveIzTabele(){
+  try{
+    const odg = await fetch(BLOG_CSV_URL);
+    if(!odg.ok) throw new Error('HTTP ' + odg.status);
+
+    const redovi = parsirajCSV(await odg.text());
+    if(redovi.length < 2) return;               // samo zaglavlje ili prazno
+
+    const novi = redovi
+      .slice(1)                                  // preskačemo red sa nazivima kolona
+      .filter(r => r && (r[0] || '').trim())     // red bez srpskog naslova se ignoriše
+      .map(r => {
+        /* Redosled kolona u tabeli:
+           A naslov · B tekst · C slika · D naslov_en · E tekst_en */
+        const naslov   = (r[0] || '').trim();
+        const tekst    = (r[1] || '').trim();
+        const slika    = (r[2] || '').trim() || 'blog-sminka.png';
+        const naslovEn = (r[3] || '').trim();
+        const tekstEn  = (r[4] || '').trim();
+
+        /* Ako prevod nije upisan, ENG verzija pada nazad na srpski
+           da post ne bi nestao sa sajta kada se prebaci jezik. */
+        const sr = napraviJezik(naslov, tekst);
+        const en = naslovEn
+          ? napraviJezik(naslovEn, tekstEn || tekst)
+          : sr;
+
+        return {
+          slika: slika,
+          vreme: procitajVremeCitanja(tekst),
+          vremeEn: procitajVremeCitanja(tekstEn || tekst),
+          sr: sr,
+          en: en
+        };
+      });
+
+    if(!novi.length) return;
+
+    blogovi = blogovi.concat(novi);   // statički ostaju, novi se nadovezuju
+    renderBlog();
+  }catch(err){
+    // Tabela nedostupna → sajt radi normalno sa statičkim blogovima.
+    console.warn('Blogovi iz tabele nisu učitani:', err);
+  }
 }
 
 (function(){
@@ -1987,7 +2105,8 @@ function renderBlog(){
     slika.src = b.slika;
     slika.alt = d.naslov;
     document.getElementById('art-tag').textContent    = d.tag;
-    document.getElementById('art-vreme').textContent  = b.vreme + ' ' + t('blog.min');
+    document.getElementById('art-vreme').textContent  =
+      ((LANG==='en' && b.vremeEn) ? b.vremeEn : b.vreme) + ' ' + t('blog.min');
     document.getElementById('art-naslov').textContent = d.naslov;
     document.getElementById('art-telo').innerHTML     = d.telo;
 
@@ -2300,6 +2419,9 @@ const io = new IntersectionObserver(es=>es.forEach(e=>{
   if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
 }),{threshold:.12});
 document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
+
+/* Blogovi iz Google tabele — učitavaju se posle prikaza stranice. */
+ucitajBlogoveIzTabele();
 </script>
 </body>
 </html>
