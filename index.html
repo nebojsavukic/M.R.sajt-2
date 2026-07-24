@@ -7,7 +7,7 @@
 <meta name="description" content="M.R. Beauty Kragujevac — trajna šminka, SPA tretmani, manikir, pedikir i edukacije. Salon lepote i wellnessa od 2018.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════
    1. TOKENI
@@ -16,12 +16,13 @@
   --bez-50:#FBF8F3;  --bez-100:#F5EFE6; --bez-200:#EAE0D2; --bez-300:#DCCDB8;
   --antracit:#2E3134; --antracit-soft:#4A4E52; --antracit-muted:#7C8083;
   --braon:#8A5A3B;   --braon-light:#A9764F; --braon-deep:#5E3A24;
+  --zlatna:#C9A227;  --zlatna-light:#DDBB55;
   --zelena:#6E8163;  --zelena-light:#9DAE93;
   --white:#fff;
   --f-display:'Cormorant',Georgia,serif;
   --f-sans:'Jost',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --wrap:80rem;      /* 1280px */
-  --wrap-sm:64rem;   /* 1024px */
+  --wrap:80rem;
+  --wrap-sm:64rem;
 }
 
 /* ═══════════════════════════════════════════════
@@ -34,8 +35,9 @@ body{
   background:var(--bez-50); color:var(--antracit);
   font-family:var(--f-sans); font-weight:400; line-height:1.5;
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
 }
-img,video,svg{ display:block; max-width:100%; }
+img,video,svg,iframe{ display:block; max-width:100%; }
 button{ font:inherit; color:inherit; background:none; border:none; cursor:pointer; }
 input,textarea,select{ font:inherit; color:inherit; }
 a{ color:inherit; text-decoration:none; }
@@ -45,9 +47,7 @@ ul,ol{ list-style:none; }
 /* ═══════════════════════════════════════════════
    3. TIPOGRAFIJA
    ═══════════════════════════════════════════════ */
-.display{ font-family:var(--f-display); font-weight:300; }
 h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
-
 .eyebrow{
   font-size:11px; letter-spacing:.35em; text-transform:uppercase;
   color:var(--zelena); margin-bottom:1.25rem;
@@ -57,12 +57,12 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
 /* ═══════════════════════════════════════════════
    4. LAYOUT
    ═══════════════════════════════════════════════ */
-.wrap{ max-width:var(--wrap); margin:0 auto; padding-inline:1.5rem; }
-.wrap-sm{ max-width:var(--wrap-sm); margin:0 auto; padding-inline:1.5rem; }
-@media (min-width:1024px){
-  .wrap,.wrap-sm{ padding-inline:2.5rem; }
-}
-.section{ padding-block:6rem; }
+.wrap{ max-width:var(--wrap); margin:0 auto; padding-inline:1.25rem; }
+.wrap-sm{ max-width:var(--wrap-sm); margin:0 auto; padding-inline:1.25rem; }
+@media (min-width:640px){ .wrap,.wrap-sm{ padding-inline:1.5rem; } }
+@media (min-width:1024px){ .wrap,.wrap-sm{ padding-inline:2.5rem; } }
+.section{ padding-block:4.5rem; }
+@media (min-width:768px){ .section{ padding-block:6rem; } }
 @media (min-width:1024px){ .section{ padding-block:8rem; } }
 .section--bez{ background:var(--bez-100); }
 
@@ -74,17 +74,25 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
   width:1px; opacity:.4;
   background:linear-gradient(180deg,transparent,var(--zelena),transparent);
 }
-
-/* Reveal on scroll */
 .fade-up{ opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease; }
 .fade-up.in{ opacity:1; transform:none; }
 
 /* ═══════════════════════════════════════════════
-   5. NAVIGACIJA
+   5. LOGO (SVG)
+   ═══════════════════════════════════════════════ */
+.logo{ display:block; line-height:0; }
+.logo svg{ height:2.5rem; width:auto; }
+@media (min-width:640px){ .logo svg{ height:2.75rem; } }
+.logo .lg-mono{ font-family:var(--f-display); font-weight:600; }
+.logo .lg-sub{ font-family:var(--f-sans); font-weight:400; }
+.logo .lg-sig{ font-family:var(--f-display); font-style:italic; font-weight:500; }
+
+/* ═══════════════════════════════════════════════
+   6. NAVIGACIJA
    ═══════════════════════════════════════════════ */
 #nav{
   position:fixed; top:0; left:0; right:0; z-index:40;
-  transition:background-color .5s ease, box-shadow .5s ease, backdrop-filter .5s ease;
+  transition:background-color .5s ease, box-shadow .5s ease;
 }
 #nav.scrolled{
   background:rgba(251,248,243,.95);
@@ -92,28 +100,24 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
   box-shadow:0 1px 0 rgba(46,49,52,.08);
 }
 .nav-bar{
-  display:flex; align-items:center; justify-content:space-between; height:5rem;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:1rem; height:4.5rem;
 }
-.logo{
-  font-family:var(--f-display); font-size:1.5rem;
-  letter-spacing:.2em; font-weight:500;
-}
-.logo span{ color:var(--braon); }
+@media (min-width:640px){ .nav-bar{ height:5rem; } }
 
-.nav-links{ display:none; align-items:center; gap:2.25rem; }
-@media (min-width:1024px){ .nav-links{ display:flex; } }
+.nav-links{ display:none; align-items:center; gap:1.75rem; }
+@media (min-width:1100px){ .nav-links{ display:flex; } }
 .nav-links a{
-  font-size:13px; letter-spacing:.18em; text-transform:uppercase;
-  transition:color .3s ease;
+  font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+  white-space:nowrap; transition:color .3s ease;
 }
 .nav-links a:hover{ color:var(--braon); }
 .nav-cta{
-  padding:.625rem 1.5rem; background:var(--antracit); color:var(--bez-50);
+  padding:.625rem 1.375rem; background:var(--antracit); color:var(--bez-50);
   transition:background-color .3s ease;
 }
 .nav-cta:hover{ background:var(--braon); color:var(--bez-50); }
 
-/* Instagram u navigaciji */
 .nav-ig{
   display:flex; align-items:center; justify-content:center;
   width:2.25rem; height:2.25rem; color:var(--antracit);
@@ -122,12 +126,30 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
 .nav-ig:hover{ color:var(--braon); transform:translateY(-2px); }
 .nav-ig svg{ width:1.25rem; height:1.25rem; }
 
+/* Prekidač jezika */
+.lang{
+  display:flex; align-items:center; gap:2px;
+  border:1px solid var(--bez-300); padding:2px; flex-shrink:0;
+}
+.lang button{
+  padding:.375rem .625rem; font-size:11px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--antracit-muted);
+  transition:background-color .3s ease, color .3s ease;
+}
+.lang button:hover{ color:var(--antracit); }
+.lang button.on{ background:var(--antracit); color:var(--bez-50); }
+
+.nav-right{ display:flex; align-items:center; gap:.75rem; }
+
 #burger{
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:.375rem; width:2.5rem; height:2.5rem;
+  gap:.375rem; width:2.5rem; height:2.5rem; flex-shrink:0;
 }
-@media (min-width:1024px){ #burger{ display:none; } }
-#burger span{ width:1.5rem; height:1px; background:var(--antracit); }
+@media (min-width:1100px){ #burger{ display:none; } }
+#burger span{ width:1.5rem; height:1px; background:var(--antracit); transition:transform .3s ease, opacity .3s ease; }
+#burger.x span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+#burger.x span:nth-child(2){ opacity:0; }
+#burger.x span:nth-child(3){ width:1.5rem; margin:0; transform:translateY(-7px) rotate(-45deg); }
 #burger span:last-child{ width:1rem; align-self:flex-end; margin-right:.5rem; }
 
 #mobmenu{
@@ -135,14 +157,15 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
   background:rgba(251,248,243,.98);
   backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
   border-top:1px solid var(--bez-200);
+  max-height:calc(100svh - 4.5rem); overflow-y:auto;
 }
 #mobmenu.open{ display:block; }
-@media (min-width:1024px){ #mobmenu,#mobmenu.open{ display:none; } }
+@media (min-width:1100px){ #mobmenu,#mobmenu.open{ display:none; } }
 .mobmenu-inner{
-  padding:1.5rem; display:flex; flex-direction:column; gap:1rem;
-  font-size:.875rem; letter-spacing:.18em; text-transform:uppercase;
+  padding:1.25rem; display:flex; flex-direction:column; gap:1rem;
+  font-size:.875rem; letter-spacing:.16em; text-transform:uppercase;
 }
-.mobmenu-inner .nav-cta{ text-align:center; padding:.75rem 1.5rem; }
+.mobmenu-inner .nav-cta{ text-align:center; padding:.875rem 1.5rem; }
 .mobmenu-ig{
   display:flex; align-items:center; gap:.625rem;
   color:var(--antracit-muted); transition:color .3s ease;
@@ -151,16 +174,22 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
 .mobmenu-ig svg{ width:1.125rem; height:1.125rem; }
 
 /* ═══════════════════════════════════════════════
-   6. HERO
+   7. HERO
    ═══════════════════════════════════════════════ */
 #pocetna{
-  position:relative; height:100svh; min-height:640px;
+  position:relative; min-height:100svh;
   display:flex; align-items:center; overflow:hidden;
+  padding-top:5rem; padding-bottom:4rem;
 }
 .hero-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 .hero-veil-1{
   position:absolute; inset:0;
-  background:linear-gradient(90deg,rgba(245,239,230,.95),rgba(245,239,230,.75) 50%,rgba(245,239,230,.25));
+  background:linear-gradient(180deg,rgba(245,239,230,.92),rgba(245,239,230,.72) 60%,rgba(245,239,230,.55));
+}
+@media (min-width:768px){
+  .hero-veil-1{
+    background:linear-gradient(90deg,rgba(245,239,230,.95),rgba(245,239,230,.75) 50%,rgba(245,239,230,.25));
+  }
 }
 .hero-veil-2{
   position:absolute; inset:0;
@@ -169,36 +198,39 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
 .hero-inner{ position:relative; width:100%; }
 .hero-copy{ max-width:42rem; }
 .hero-kicker{
-  font-size:11px; letter-spacing:.35em; text-transform:uppercase;
+  font-size:11px; letter-spacing:.3em; text-transform:uppercase;
   color:var(--braon); margin-bottom:1.5rem;
 }
-.hero-title{
-  font-size:3rem; line-height:1.05; font-weight:300;
-}
-@media (min-width:640px){ .hero-title{ font-size:3.75rem; } }
+.hero-title{ font-size:2.25rem; line-height:1.08; font-weight:300; }
+@media (min-width:480px){ .hero-title{ font-size:2.75rem; } }
+@media (min-width:640px){ .hero-title{ font-size:3.5rem; } }
 @media (min-width:1024px){ .hero-title{ font-size:4.5rem; } }
 .hero-title em{ font-style:italic; color:var(--braon); }
-.hero-rule{ width:10rem; margin-block:2rem; }
+.hero-rule{ width:8rem; margin-block:1.75rem; }
 .hero-text{
-  font-size:1.125rem; color:var(--antracit-soft); max-width:28rem;
+  font-size:1rem; color:var(--antracit-soft); max-width:28rem;
   line-height:1.7; font-weight:300;
 }
-.hero-btns{ display:flex; flex-wrap:wrap; gap:1rem; margin-top:2.5rem; }
+@media (min-width:640px){ .hero-text{ font-size:1.125rem; } }
+.hero-btns{ display:flex; flex-wrap:wrap; gap:.75rem; margin-top:2rem; }
 
 .btn{
-  display:inline-block; padding:1rem 2.25rem;
-  font-size:.875rem; letter-spacing:.15em; text-transform:uppercase;
+  display:inline-block; padding:.875rem 1.75rem;
+  font-size:.8125rem; letter-spacing:.14em; text-transform:uppercase;
+  text-align:center;
   transition:background-color .3s ease, border-color .3s ease, color .3s ease;
 }
+@media (min-width:640px){ .btn{ padding:1rem 2.25rem; font-size:.875rem; } }
 .btn--solid{ background:var(--antracit); color:var(--bez-50); }
 .btn--solid:hover{ background:var(--braon); }
 .btn--ghost{ border:1px solid rgba(46,49,52,.25); }
 .btn--ghost:hover{ border-color:var(--braon); color:var(--braon); }
 
 .scroll-hint{
-  position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%);
-  display:flex; flex-direction:column; align-items:center; gap:.75rem;
+  position:absolute; bottom:1.75rem; left:50%; transform:translateX(-50%);
+  display:none; flex-direction:column; align-items:center; gap:.75rem;
 }
+@media (min-width:768px){ .scroll-hint{ display:flex; } }
 .scroll-hint span{
   font-size:10px; letter-spacing:.3em; text-transform:uppercase;
   color:var(--antracit-muted);
@@ -206,68 +238,59 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
 .scroll-hint .vline{ height:3rem; }
 
 /* ═══════════════════════════════════════════════
-   7. USLUGE (kartice)
+   8. USLUGE
    ═══════════════════════════════════════════════ */
-.sec-head{ text-align:center; max-width:42rem; margin:0 auto 4rem; }
-.sec-head h2{ font-size:2.25rem; line-height:1.2; }
+.sec-head{ text-align:center; max-width:42rem; margin:0 auto 3rem; }
+@media (min-width:768px){ .sec-head{ margin-bottom:4rem; } }
+.sec-head h2{ font-size:1.875rem; line-height:1.2; }
+@media (min-width:640px){ .sec-head h2{ font-size:2.25rem; } }
 @media (min-width:1024px){ .sec-head h2{ font-size:3rem; } }
 
 .usluge-grid{
   display:grid; grid-template-columns:1fr; gap:1px; background:var(--bez-200);
 }
-@media (min-width:768px){ .usluge-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:640px){ .usluge-grid{ grid-template-columns:repeat(2,1fr); } }
 @media (min-width:1024px){ .usluge-grid{ grid-template-columns:repeat(4,1fr); } }
-
-.usluga{
-  background:var(--bez-50); padding:2rem;
-  transition:background-color .5s ease;
-}
+.usluga{ background:var(--bez-50); padding:1.75rem; transition:background-color .5s ease; }
 @media (min-width:1024px){ .usluga{ padding:2.25rem; } }
 .usluga:hover{ background:var(--white); }
-.usluga-media{
-  aspect-ratio:4/5; background:var(--bez-100);
-  margin-bottom:1.75rem; overflow:hidden;
-}
+.usluga-media{ aspect-ratio:4/5; background:var(--bez-100); margin-bottom:1.5rem; overflow:hidden; }
 .usluga-media img{
   width:100%; height:100%; object-fit:cover;
   transition:transform .7s cubic-bezier(.22,.61,.36,1);
 }
 .usluga:hover .usluga-media img{ transform:scale(1.05); }
-.usluga h3{ font-size:1.5rem; margin-bottom:.75rem; }
+.usluga h3{ font-size:1.375rem; margin-bottom:.75rem; }
 .usluga .hairline{ width:2.5rem; margin-bottom:1rem; }
-.usluga p{
-  font-size:.875rem; color:var(--antracit-soft);
-  line-height:1.7; margin-bottom:1.25rem;
-}
+.usluga p{ font-size:.875rem; color:var(--antracit-soft); line-height:1.7; margin-bottom:1.25rem; }
 .usluga .cena{
-  font-size:.75rem; letter-spacing:.15em; text-transform:uppercase;
+  font-size:.75rem; letter-spacing:.14em; text-transform:uppercase;
   color:var(--braon); margin-bottom:0;
 }
 
 /* ═══════════════════════════════════════════════
-   8. GALERIJA
+   9. GALERIJA
    ═══════════════════════════════════════════════ */
-.gal-head{
-  display:flex; flex-direction:column; gap:2rem;
-  margin-bottom:3rem;
-}
+.gal-head{ display:flex; flex-direction:column; gap:1.5rem; margin-bottom:2.5rem; }
 @media (min-width:1024px){
   .gal-head{ flex-direction:row; align-items:flex-end; justify-content:space-between; }
 }
-.gal-head h2{ font-size:2.25rem; }
+.gal-head h2{ font-size:1.875rem; }
+@media (min-width:640px){ .gal-head h2{ font-size:2.25rem; } }
 @media (min-width:1024px){ .gal-head h2{ font-size:3rem; } }
-.gal-head .note{
-  font-size:.875rem; color:var(--antracit-soft);
-  max-width:24rem; line-height:1.7;
-}
+.gal-head .note{ font-size:.875rem; color:var(--antracit-soft); max-width:24rem; line-height:1.7; }
 
 #tabs{
-  display:flex; flex-wrap:wrap; gap:2rem;
-  border-bottom:1px solid var(--bez-200); margin-bottom:2.5rem;
+  display:flex; flex-wrap:nowrap; gap:1.5rem;
+  border-bottom:1px solid var(--bez-200); margin-bottom:2rem;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
 }
+#tabs::-webkit-scrollbar{ display:none; }
+@media (min-width:768px){ #tabs{ flex-wrap:wrap; gap:2rem; } }
 .tab{
-  position:relative; padding-bottom:1rem;
-  font-size:.875rem; letter-spacing:.15em; text-transform:uppercase;
+  position:relative; padding-bottom:1rem; white-space:nowrap; flex-shrink:0;
+  font-size:.8125rem; letter-spacing:.14em; text-transform:uppercase;
   color:var(--antracit-muted); transition:color .3s ease;
 }
 .tab:hover{ color:var(--antracit); }
@@ -279,36 +302,33 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
 .tab.active{ color:var(--antracit); }
 .tab.active .tab-line{ transform:scaleX(1); }
 
-#grid{
-  display:grid; grid-template-columns:repeat(2,1fr); gap:1rem;
-}
-@media (min-width:768px){ #grid{ grid-template-columns:repeat(3,1fr); } }
+#grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:.625rem; }
+@media (min-width:640px){ #grid{ gap:1rem; grid-template-columns:repeat(3,1fr); } }
 @media (min-width:1024px){ #grid{ grid-template-columns:repeat(4,1fr); } }
-
 .gal-item{
   position:relative; aspect-ratio:1/1; background:var(--bez-200);
-  overflow:hidden; animation:pop .45s ease both;
+  overflow:hidden; animation:pop .45s ease both; width:100%;
 }
 @keyframes pop{
   from{ opacity:0; transform:scale(.97) translateY(10px); }
   to{ opacity:1; transform:none; }
 }
-.gal-item img,.gal-item video{ width:100%; height:100%; object-fit:cover; }
+.gal-item img{ width:100%; height:100%; object-fit:cover; }
 .gal-veil{
   position:absolute; inset:0; background:rgba(46,49,52,0);
-  display:flex; align-items:flex-end; padding:1rem;
+  display:flex; align-items:flex-end; padding:.75rem;
   transition:background-color .4s ease;
 }
 .gal-item:hover .gal-veil{ background:rgba(46,49,52,.55); }
 .gal-veil p{
-  color:var(--bez-50); font-size:.875rem; text-align:left;
+  color:var(--bez-50); font-size:.8125rem; text-align:left;
   opacity:0; transform:translateY(.5rem);
   transition:opacity .3s ease, transform .3s ease;
 }
 .gal-item:hover .gal-veil p{ opacity:1; transform:none; }
 
 /* ═══════════════════════════════════════════════
-   9. LIGHTBOX
+   10. LIGHTBOX
    ═══════════════════════════════════════════════ */
 #lightbox{
   position:fixed; inset:0; z-index:50;
@@ -327,11 +347,12 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
 #lb-media{
   background:rgba(74,78,82,.3);
   display:flex; align-items:center; justify-content:center;
-  max-height:75vh; overflow:hidden;
+  max-height:70vh; overflow:hidden;
 }
-#lb-media img{ max-height:75vh; width:auto; object-fit:contain; }
+#lb-media img{ max-height:70vh; width:auto; object-fit:contain; }
 .lb-cap{ margin-top:1.25rem; text-align:center; }
-#lb-title{ font-family:var(--f-display); font-size:1.5rem; color:var(--bez-50); }
+#lb-title{ font-family:var(--f-display); font-size:1.25rem; color:var(--bez-50); }
+@media (min-width:640px){ #lb-title{ font-size:1.5rem; } }
 #lb-cat{
   font-size:11px; letter-spacing:.3em; text-transform:uppercase;
   color:var(--zelena-light); margin-top:.5rem;
@@ -342,17 +363,15 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
   font-weight:300; transition:color .3s ease;
 }
 .lb-btn:hover{ color:var(--braon-light); }
-#lb-close{ top:1.5rem; right:1.5rem; font-size:1.875rem; }
+#lb-close{ top:1rem; right:1rem; font-size:1.875rem; }
 #lb-prev,#lb-next{ top:50%; transform:translateY(-50%); font-size:2.25rem; }
-#lb-prev{ left:1rem; }  #lb-next{ right:1rem; }
-@media (min-width:640px){ #lb-prev{ left:2rem; } #lb-next{ right:2rem; } }
+#lb-prev{ left:.25rem; }  #lb-next{ right:.25rem; }
+@media (min-width:640px){ #lb-prev{ left:2rem; } #lb-next{ right:2rem; } #lb-close{ top:1.5rem; right:1.5rem; } }
 
 /* ═══════════════════════════════════════════════
-   10. O NAMA
+   11. O NAMA
    ═══════════════════════════════════════════════ */
-.about{
-  display:grid; grid-template-columns:1fr; gap:3rem; align-items:center;
-}
+.about{ display:grid; grid-template-columns:1fr; gap:2.5rem; align-items:center; }
 @media (min-width:1024px){
   .about{ grid-template-columns:repeat(12,1fr); gap:4rem; }
   .about-media{ grid-column:span 5; }
@@ -360,29 +379,31 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
 }
 .about-media div{ aspect-ratio:4/5; background:var(--bez-100); overflow:hidden; }
 .about-media img{ width:100%; height:100%; object-fit:cover; }
-.about-copy h2{ font-size:2.25rem; line-height:1.2; margin-bottom:1.75rem; }
+.about-copy h2{ font-size:1.875rem; line-height:1.2; margin-bottom:1.5rem; }
+@media (min-width:640px){ .about-copy h2{ font-size:2.25rem; } }
 @media (min-width:1024px){ .about-copy h2{ font-size:3rem; } }
 .about-copy .hairline{ width:6rem; margin-bottom:2rem; }
 .about-text{ display:flex; flex-direction:column; gap:1.25rem; }
 .about-text p{ color:var(--antracit-soft); line-height:1.7; }
 .stats{
-  display:grid; grid-template-columns:repeat(3,1fr); gap:2rem;
-  margin-top:3rem; padding-top:2.5rem; border-top:1px solid var(--bez-200);
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1rem;
+  margin-top:2.5rem; padding-top:2rem; border-top:1px solid var(--bez-200);
 }
-.stats .num{
-  font-family:var(--f-display); font-size:2.25rem;
-  font-weight:300; color:var(--braon);
-}
+.stats .num{ font-family:var(--f-display); font-size:1.75rem; font-weight:300; color:var(--braon); }
+@media (min-width:640px){ .stats .num{ font-size:2.25rem; } }
 .stats .lbl{
-  font-size:.75rem; letter-spacing:.12em; text-transform:uppercase;
-  color:var(--antracit-muted); margin-top:.5rem;
+  font-size:.6875rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--antracit-muted); margin-top:.5rem; line-height:1.4;
 }
+@media (min-width:640px){ .stats .lbl{ font-size:.75rem; } }
 
 /* ═══════════════════════════════════════════════
-   11. WIZARD
+   12. WIZARD
    ═══════════════════════════════════════════════ */
-.wiz-head{ text-align:center; max-width:42rem; margin:0 auto 3.5rem; }
-.wiz-head h2{ font-size:2.25rem; line-height:1.2; margin-bottom:1.5rem; }
+.wiz-head{ text-align:center; max-width:42rem; margin:0 auto 2.5rem; }
+@media (min-width:768px){ .wiz-head{ margin-bottom:3.5rem; } }
+.wiz-head h2{ font-size:1.875rem; line-height:1.2; margin-bottom:1.25rem; }
+@media (min-width:640px){ .wiz-head h2{ font-size:2.25rem; } }
 @media (min-width:1024px){ .wiz-head h2{ font-size:3rem; } }
 
 #wizard{
@@ -390,29 +411,27 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
   box-shadow:0 1px 2px rgba(46,49,52,.04), 0 12px 40px -12px rgba(46,49,52,.10);
   scroll-margin-top:6rem;
 }
-
 .wiz-track{
   display:grid; grid-template-columns:repeat(3,1fr);
   border-bottom:1px solid var(--bez-200);
-  font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+  font-size:10px; letter-spacing:.18em; text-transform:uppercase;
 }
 @media (min-width:640px){ .wiz-track{ font-size:11px; } }
 .wstep{
-  padding-block:1.25rem; text-align:center; color:var(--antracit-muted);
+  padding-block:1.125rem; text-align:center; color:var(--antracit-muted);
   transition:color .4s ease, background-color .4s ease;
 }
 .wstep:not(:last-child){ border-right:1px solid var(--bez-200); }
 .wstep-n{ opacity:.55; }
 .wstep-t{ display:none; }
-@media (min-width:640px){ .wstep-t{ display:inline; } }
+@media (min-width:480px){ .wstep-t{ display:inline; } }
 .wstep.is-now{ color:var(--antracit); background:var(--bez-50); }
 .wstep.is-now .wstep-n{ opacity:1; color:var(--braon); }
 .wstep.is-done{ color:var(--braon); }
 
-.wiz-stage{ position:relative; min-height:420px; padding:1.75rem; }
-@media (min-width:640px){ .wiz-stage{ padding:2.5rem; } }
-@media (min-width:1024px){ .wiz-stage{ padding:3rem; } }
-@media (max-width:640px){ .wiz-stage{ min-height:520px; } }
+.wiz-stage{ position:relative; min-height:520px; padding:1.5rem; }
+@media (min-width:640px){ .wiz-stage{ padding:2.25rem; min-height:440px; } }
+@media (min-width:1024px){ .wiz-stage{ padding:3rem; min-height:420px; } }
 
 .wiz-pane{
   position:absolute; inset:0; padding:inherit; overflow-y:auto;
@@ -425,15 +444,14 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
   transition:opacity .42s ease .06s,
              transform .42s cubic-bezier(.22,.61,.36,1) .06s, visibility 0s;
 }
-.wiz-pane h3{ font-size:1.5rem; margin-bottom:.5rem; }
+.wiz-pane h3{ font-size:1.375rem; margin-bottom:.5rem; }
 @media (min-width:640px){ .wiz-pane h3{ font-size:1.875rem; } }
-.wiz-sub{ font-size:.875rem; color:var(--antracit-muted); margin-bottom:2rem; }
+.wiz-sub{ font-size:.875rem; color:var(--antracit-muted); margin-bottom:1.75rem; }
 
-/* Kartice */
-.wiz-cards{ display:grid; grid-template-columns:1fr; gap:1rem; }
-@media (min-width:640px){ .wiz-cards{ grid-template-columns:repeat(2,1fr); } }
+.wiz-cards{ display:grid; grid-template-columns:1fr; gap:.75rem; }
+@media (min-width:520px){ .wiz-cards{ grid-template-columns:repeat(2,1fr); gap:1rem; } }
 .wiz-card{
-  position:relative; text-align:left; padding:1.5rem;
+  position:relative; text-align:left; padding:1.25rem;
   border:1px solid var(--bez-200); background:var(--white);
   opacity:.55; filter:saturate(.6);
   transition:opacity .6s ease, filter .6s ease, border-color .35s ease,
@@ -450,7 +468,7 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
   transform:translateY(-3px);
 }
 .wiz-card-t{ font-family:var(--f-display); font-size:1.25rem; margin-bottom:.375rem; }
-.wiz-card-d{ font-size:.875rem; color:var(--antracit-muted); }
+.wiz-card-d{ font-size:.8125rem; color:var(--antracit-muted); }
 .wiz-tick{
   position:absolute; top:1rem; right:1rem;
   width:20px; height:20px; border-radius:50%;
@@ -463,16 +481,17 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
   background:var(--braon); border-color:var(--braon);
 }
 
-/* Korak 2 */
-.wiz-two{ display:grid; grid-template-columns:1fr; gap:2rem; }
+.wiz-two{ display:grid; grid-template-columns:1fr; gap:1.75rem; }
 @media (min-width:1024px){ .wiz-two{ grid-template-columns:repeat(2,1fr); gap:3rem; } }
 .wiz-lbl{
-  font-size:11px; letter-spacing:.2em; text-transform:uppercase;
-  color:var(--antracit-muted); margin-bottom:1.25rem;
+  font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--antracit-muted); margin-bottom:1rem;
 }
 #wizDani{ display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; }
-@media (min-width:640px){ #wizDani{ grid-template-columns:repeat(6,1fr); } }
+@media (min-width:480px){ #wizDani{ grid-template-columns:repeat(6,1fr); } }
 #wizTermini{ display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; }
+@media (min-width:480px){ #wizTermini{ grid-template-columns:repeat(4,1fr); } }
+@media (min-width:1024px){ #wizTermini{ grid-template-columns:repeat(3,1fr); } }
 .wiz-empty{ grid-column:1/-1; font-size:.875rem; color:var(--antracit-muted); padding-block:.75rem; }
 
 .wiz-chip{
@@ -488,84 +507,80 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
 }
 .wiz-chip:disabled{ opacity:.25; text-decoration:line-through; cursor:not-allowed; }
 .wiz-chip-d{
-  display:block; font-size:10px; letter-spacing:.14em;
+  display:block; font-size:10px; letter-spacing:.12em;
   text-transform:uppercase; opacity:.6; margin-bottom:2px;
 }
 
-/* Korak 3 */
-.wiz-form{ display:flex; flex-direction:column; gap:1.5rem; max-width:36rem; }
+.wiz-form{ display:flex; flex-direction:column; gap:1.375rem; max-width:36rem; }
 .wiz-field span{
-  display:block; font-size:11px; letter-spacing:.2em;
+  display:block; font-size:11px; letter-spacing:.18em;
   text-transform:uppercase; color:var(--antracit-muted);
 }
 .wiz-field .opt{ display:inline; text-transform:none; letter-spacing:normal; font-style:normal; }
 .wiz-input{
   margin-top:.5rem; width:100%; background:transparent;
   border:none; border-bottom:1px solid var(--bez-300);
-  padding-block:.75rem; outline:none; resize:none;
+  padding-block:.75rem; outline:none; resize:none; font-size:1rem;
   transition:border-color .3s ease, box-shadow .3s ease;
 }
 .wiz-input:focus{ border-color:var(--braon); box-shadow:0 1px 0 0 var(--braon); }
 
 #wizSazetak{
-  margin-top:2rem; padding:1.25rem; background:var(--bez-50);
+  margin-top:1.75rem; padding:1.125rem; background:var(--bez-50);
   border-left:2px solid var(--zelena); font-size:.875rem;
 }
 #wizSazetak p+p{ margin-top:.375rem; }
 #wizSazetak .muted{ color:var(--antracit-muted); }
 #wizSazetak .cap{
-  font-size:11px; letter-spacing:.25em; text-transform:uppercase;
+  font-size:11px; letter-spacing:.22em; text-transform:uppercase;
   color:var(--zelena); margin-bottom:.75rem;
 }
 #wizGreska{ margin-top:1rem; font-size:.875rem; color:var(--braon-deep); }
 .hidden{ display:none !important; }
-
-/* Skriveno polje za FormSubmit — mora ostati u DOM-u */
 .visually-hidden{
   position:absolute !important; width:1px; height:1px;
   padding:0; margin:-1px; overflow:hidden;
   clip:rect(0 0 0 0); white-space:nowrap; border:0;
 }
 
-/* Potvrda */
 .wiz-pane--ok{ text-align:center; }
 .wiz-check{
   width:4rem; height:4rem; border:1px solid var(--zelena); border-radius:50%;
   display:flex; align-items:center; justify-content:center;
-  margin:0 auto 1.75rem; color:var(--zelena); font-size:1.5rem;
+  margin:0 auto 1.5rem; color:var(--zelena); font-size:1.5rem;
   animation:wizPop .5s cubic-bezier(.34,1.56,.64,1) both;
 }
 @keyframes wizPop{ from{ transform:scale(.5); opacity:0; } to{ transform:scale(1); opacity:1; } }
-.wiz-pane--ok h3{ font-size:1.875rem; margin-bottom:1rem; }
+.wiz-pane--ok h3{ font-size:1.625rem; margin-bottom:1rem; }
 #wizPotvrdaTekst{ color:var(--antracit-soft); max-width:28rem; margin:0 auto; line-height:1.7; }
 .wiz-ig{
-  display:inline-flex; align-items:center; gap:.5rem; margin-top:2rem;
-  font-size:.75rem; letter-spacing:.15em; text-transform:uppercase;
+  display:inline-flex; align-items:center; gap:.5rem; margin-top:1.75rem;
+  font-size:.75rem; letter-spacing:.14em; text-transform:uppercase;
   color:var(--braon); transition:color .3s ease;
 }
 .wiz-ig:hover{ color:var(--braon-deep); }
 .wiz-ig svg{ width:1rem; height:1rem; }
 
-/* Navigacija */
 #wizNav{
   display:flex; align-items:center; justify-content:space-between;
-  padding:1.75rem; border-top:1px solid var(--bez-200);
+  gap:1rem; padding:1.5rem; border-top:1px solid var(--bez-200);
 }
-@media (min-width:640px){ #wizNav{ padding-inline:2.5rem; } }
+@media (min-width:640px){ #wizNav{ padding-inline:2.25rem; } }
 @media (min-width:1024px){ #wizNav{ padding-inline:3rem; } }
 #wizNazad{
-  font-size:.875rem; letter-spacing:.15em; text-transform:uppercase;
+  font-size:.8125rem; letter-spacing:.14em; text-transform:uppercase;
   color:var(--antracit-muted); transition:color .3s ease;
 }
 #wizNazad:hover:not(:disabled){ color:var(--braon); }
 #wizNazad:disabled{ opacity:.25; cursor:default; }
 
 .wiz-cta{
-  padding:.95rem 2.25rem; font-size:.875rem;
-  letter-spacing:.15em; text-transform:uppercase;
+  padding:.875rem 1.5rem; font-size:.8125rem;
+  letter-spacing:.14em; text-transform:uppercase;
   background:var(--bez-300); color:var(--white); cursor:not-allowed;
   transition:background-color .45s ease, color .45s ease, box-shadow .45s ease;
 }
+@media (min-width:640px){ .wiz-cta{ padding:.95rem 2.25rem; font-size:.875rem; } }
 .wiz-cta:not(:disabled){
   background:var(--antracit); color:var(--bez-50); cursor:pointer;
   animation:wizPulse 2.6s ease-in-out infinite;
@@ -574,69 +589,52 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
   background:var(--braon); animation:none;
   box-shadow:0 10px 28px -10px rgba(138,90,59,.6);
 }
-.wiz-cta.is-sending{
-  animation:none; background:var(--antracit-muted); cursor:wait;
-}
+.wiz-cta.is-sending{ animation:none; background:var(--antracit-muted); cursor:wait; }
 @keyframes wizPulse{
   0%,100%{ box-shadow:0 0 0 0 rgba(138,90,59,.36); }
   50%    { box-shadow:0 0 0 10px rgba(138,90,59,0); }
 }
 
 /* ═══════════════════════════════════════════════
-   12. BLOG
+   13. BLOG
    ═══════════════════════════════════════════════ */
-.blog-head{
-  display:flex; flex-direction:column; gap:1.5rem; margin-bottom:3.5rem;
-}
-@media (min-width:1024px){
-  .blog-head{ flex-direction:row; align-items:flex-end; justify-content:space-between; }
-}
-.blog-head h2{ font-size:2.25rem; }
+.blog-head{ display:flex; flex-direction:column; gap:1.5rem; margin-bottom:2.5rem; }
+@media (min-width:768px){ .blog-head{ margin-bottom:3.5rem; } }
+.blog-head h2{ font-size:1.875rem; }
+@media (min-width:640px){ .blog-head h2{ font-size:2.25rem; } }
 @media (min-width:1024px){ .blog-head h2{ font-size:3rem; } }
-.blog-all{
-  font-size:.875rem; letter-spacing:.15em; text-transform:uppercase;
-  color:var(--braon); transition:color .3s ease;
-}
-.blog-all:hover{ color:var(--braon-deep); }
 
-#blog-grid{ display:grid; grid-template-columns:1fr; gap:2rem; }
-@media (min-width:768px){ #blog-grid{ grid-template-columns:repeat(3,1fr); } }
+#blog-grid{ display:grid; grid-template-columns:1fr; gap:2.5rem; }
+@media (min-width:640px){ #blog-grid{ grid-template-columns:repeat(2,1fr); gap:2rem; } }
+@media (min-width:1024px){ #blog-grid{ grid-template-columns:repeat(3,1fr); } }
 .post{ cursor:pointer; }
-.post-media{
-  aspect-ratio:3/2; background:var(--bez-100);
-  overflow:hidden; margin-bottom:1.5rem;
-}
+.post-media{ aspect-ratio:3/2; background:var(--bez-100); overflow:hidden; margin-bottom:1.25rem; }
 .post-media img{
   width:100%; height:100%; object-fit:cover;
   transition:transform .7s cubic-bezier(.22,.61,.36,1);
 }
 .post:hover .post-media img{ transform:scale(1.05); }
-.post-meta{ display:flex; align-items:center; gap:.75rem; margin-bottom:1rem; }
-.post-tag{
-  font-size:10px; letter-spacing:.25em; text-transform:uppercase; color:var(--zelena);
-}
+.post-meta{ display:flex; align-items:center; gap:.75rem; margin-bottom:.875rem; flex-wrap:wrap; }
+.post-tag{ font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--zelena); }
 .post-dash{ width:1.5rem; height:1px; background:var(--bez-300); }
 .post-time{ font-size:11px; color:var(--antracit-muted); }
-.post h3{
-  font-size:1.5rem; line-height:1.35; margin-bottom:1rem;
-  transition:color .3s ease;
-}
+.post h3{ font-size:1.375rem; line-height:1.35; margin-bottom:.875rem; transition:color .3s ease; }
 .post:hover h3{ color:var(--braon); }
 .post-excerpt{ font-size:.875rem; color:var(--antracit-soft); line-height:1.7; }
 .post-more{
-  margin-top:1.25rem; font-size:.75rem;
-  letter-spacing:.2em; text-transform:uppercase; color:var(--braon);
+  margin-top:1.125rem; font-size:.75rem;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--braon);
 }
 
 /* ═══════════════════════════════════════════════
-   12b. BLOG — PUN TEKST (modal)
+   13b. BLOG — PUN TEKST
    ═══════════════════════════════════════════════ */
 #artikal{
   position:fixed; inset:0; z-index:60;
   background:rgba(46,49,52,.6);
   backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
   display:flex; align-items:flex-start; justify-content:center;
-  padding:1rem; overflow-y:auto;
+  padding:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
   opacity:0; pointer-events:none; transition:opacity .35s ease;
 }
 @media (min-width:768px){ #artikal{ padding:3rem 2rem; } }
@@ -647,18 +645,21 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
   transform:translateY(18px); transition:transform .4s cubic-bezier(.2,.8,.3,1);
 }
 #artikal.open .art-box{ transform:none; }
-.art-hero{ aspect-ratio:16/7; background:var(--bez-100); overflow:hidden; }
+.art-hero{ aspect-ratio:16/9; background:var(--bez-100); overflow:hidden; }
+@media (min-width:768px){ .art-hero{ aspect-ratio:16/7; } }
 .art-hero img{ width:100%; height:100%; object-fit:cover; }
-.art-body{ padding:2rem 1.75rem 2.75rem; }
+.art-body{ padding:1.75rem 1.25rem 2.5rem; }
+@media (min-width:640px){ .art-body{ padding:2.5rem 2rem 3rem; } }
 @media (min-width:768px){ .art-body{ padding:3rem 3.5rem 3.5rem; } }
-.art-body h2{ font-size:2rem; line-height:1.2; margin-bottom:1.5rem; }
+.art-body h2{ font-size:1.625rem; line-height:1.2; margin-bottom:1.25rem; }
 @media (min-width:768px){ .art-body h2{ font-size:2.5rem; } }
-.art-body .hairline{ width:5rem; margin-bottom:2rem; }
+.art-body .hairline{ width:5rem; margin-bottom:1.75rem; }
 .art-text p{ color:var(--antracit-soft); line-height:1.85; margin-bottom:1.25rem; }
 .art-text h4{
-  font-family:var(--f-display); font-size:1.375rem; font-weight:400;
-  color:var(--antracit); margin:2.25rem 0 .875rem;
+  font-family:var(--f-display); font-size:1.25rem; font-weight:400;
+  color:var(--antracit); margin:2rem 0 .875rem;
 }
+@media (min-width:768px){ .art-text h4{ font-size:1.375rem; } }
 .art-text strong{ color:var(--antracit); font-weight:500; }
 .art-text ul{ margin:0 0 1.5rem; }
 .art-text li{
@@ -670,53 +671,79 @@ h1,h2,h3{ font-family:var(--f-display); font-weight:300; line-height:1.15; }
   width:.5rem; height:1px; background:var(--zelena);
 }
 .art-cta{
-  margin-top:2.5rem; padding-top:2rem; border-top:1px solid var(--bez-200);
-  display:flex; flex-wrap:wrap; align-items:center; gap:1.25rem;
+  margin-top:2.25rem; padding-top:1.75rem; border-top:1px solid var(--bez-200);
+  display:flex; flex-wrap:wrap; align-items:center; gap:1rem;
 }
 .art-cta p{ font-size:.875rem; color:var(--antracit-muted); }
 #art-close{
-  position:absolute; top:1rem; right:1rem; z-index:2;
+  position:absolute; top:.75rem; right:.75rem; z-index:2;
   width:2.75rem; height:2.75rem; font-size:1.75rem; font-weight:300;
   display:flex; align-items:center; justify-content:center;
-  background:rgba(251,248,243,.9); color:var(--antracit);
+  background:rgba(251,248,243,.92); color:var(--antracit);
   backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
   transition:background-color .3s ease, color .3s ease;
 }
+@media (min-width:768px){ #art-close{ top:1rem; right:1rem; } }
 #art-close:hover{ background:var(--braon); color:var(--bez-50); }
 
 /* ═══════════════════════════════════════════════
-   13. FOOTER
+   14. LOKACIJA / MAPA
    ═══════════════════════════════════════════════ */
-footer{ background:var(--antracit); color:var(--bez-100); padding-top:5rem; padding-bottom:2.5rem; }
-.foot-grid{
-  display:grid; grid-template-columns:1fr; gap:3rem; padding-bottom:3.5rem;
+.mapa-grid{ display:grid; grid-template-columns:1fr; gap:2rem; align-items:stretch; }
+@media (min-width:900px){ .mapa-grid{ grid-template-columns:1fr 1.15fr; gap:3rem; } }
+.mapa-info{ display:flex; flex-direction:column; justify-content:center; }
+.mapa-info h2{ font-size:1.875rem; line-height:1.2; margin-bottom:1.25rem; }
+@media (min-width:640px){ .mapa-info h2{ font-size:2.25rem; } }
+@media (min-width:1024px){ .mapa-info h2{ font-size:2.75rem; } }
+.mapa-info .hairline{ width:5rem; margin-bottom:1.75rem; }
+.kontakt-list{ display:flex; flex-direction:column; gap:1.5rem; }
+.kontakt-row{ display:flex; gap:1rem; align-items:flex-start; }
+.kontakt-ico{
+  flex-shrink:0; width:2.5rem; height:2.5rem;
+  border:1px solid var(--bez-300); color:var(--braon);
+  display:flex; align-items:center; justify-content:center;
 }
-@media (min-width:768px){ .foot-grid{ grid-template-columns:repeat(3,1fr); } }
-.foot-logo{
-  font-family:var(--f-display); font-size:1.5rem;
-  letter-spacing:.2em; margin-bottom:1.25rem;
+.kontakt-ico svg{ width:1.125rem; height:1.125rem; }
+.kontakt-row .k-lbl{
+  font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--zelena); margin-bottom:.375rem;
 }
-.foot-logo span{ color:var(--braon-light); }
-.foot-about{
-  font-size:.875rem; color:rgba(220,205,184,.7);
-  line-height:1.7; max-width:20rem;
+.kontakt-row .k-val{ color:var(--antracit-soft); line-height:1.6; }
+.kontakt-row a.k-val:hover{ color:var(--braon); }
+.mapa-okvir{
+  position:relative; width:100%; min-height:320px;
+  background:var(--bez-200); overflow:hidden;
+  border:1px solid var(--bez-200);
 }
+@media (min-width:900px){ .mapa-okvir{ min-height:420px; } }
+.mapa-okvir iframe{
+  position:absolute; inset:0; width:100%; height:100%; border:0;
+}
+
+/* ═══════════════════════════════════════════════
+   15. FOOTER
+   ═══════════════════════════════════════════════ */
+footer{ background:var(--antracit); color:var(--bez-100); padding-top:3.5rem; padding-bottom:2rem; }
+@media (min-width:768px){ footer{ padding-top:5rem; padding-bottom:2.5rem; } }
+.foot-grid{ display:grid; grid-template-columns:1fr; gap:2.5rem; padding-bottom:2.5rem; }
+@media (min-width:640px){ .foot-grid{ grid-template-columns:repeat(2,1fr); gap:2.5rem; } }
+@media (min-width:1024px){ .foot-grid{ grid-template-columns:1.3fr 1fr 1fr; gap:3rem; padding-bottom:3.5rem; } }
+.foot-logo svg{ height:5.5rem; width:auto; margin-bottom:1.25rem; }
+.foot-about{ font-size:.875rem; color:rgba(220,205,184,.7); line-height:1.7; max-width:22rem; }
 .foot-h{
-  font-size:11px; letter-spacing:.3em; text-transform:uppercase;
+  font-size:11px; letter-spacing:.28em; text-transform:uppercase;
   color:var(--zelena-light); margin-bottom:1.25rem;
 }
-.foot-list{ display:flex; flex-direction:column; gap:.625rem; font-size:.875rem; color:rgba(220,205,184,.8); }
+.foot-list{ display:flex; flex-direction:column; gap:.625rem; font-size:.875rem; color:rgba(220,205,184,.8); line-height:1.6; }
 .foot-list a{ transition:color .3s ease; }
 .foot-list a:hover{ color:var(--braon-light); }
-
-/* Instagram u podnožju */
-.foot-social{ display:flex; gap:.75rem; margin-top:1.75rem; }
+.foot-social{ display:flex; gap:.75rem; margin-top:1.5rem; }
 .foot-ig{
   display:inline-flex; align-items:center; gap:.625rem;
   padding:.625rem 1.125rem;
   border:1px solid rgba(220,205,184,.25);
   color:rgba(220,205,184,.85);
-  font-size:.75rem; letter-spacing:.15em; text-transform:uppercase;
+  font-size:.75rem; letter-spacing:.14em; text-transform:uppercase;
   transition:border-color .35s ease, color .35s ease, background-color .35s ease;
 }
 .foot-ig:hover{
@@ -724,14 +751,13 @@ footer{ background:var(--antracit); color:var(--bez-100); padding-top:5rem; padd
   background:rgba(169,118,79,.18);
 }
 .foot-ig svg{ width:1.125rem; height:1.125rem; }
-
 .foot-copy{
-  padding-top:2rem; font-size:.75rem;
+  padding-top:1.75rem; font-size:.75rem;
   color:rgba(220,205,184,.5); text-align:center; letter-spacing:.02em;
 }
 
 /* ═══════════════════════════════════════════════
-   14. PRISTUPAČNOST
+   16. PRISTUPAČNOST
    ═══════════════════════════════════════════════ */
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   outline:2px solid var(--braon); outline-offset:3px;
@@ -750,16 +776,24 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <!-- ══════════ NAV ══════════ -->
 <header id="nav">
   <div class="wrap nav-bar">
-    <a href="#pocetna" class="logo">M.R. <span>BEAUTY</span></a>
+    <a href="#pocetna" class="logo" aria-label="M.R. Beauty">
+      <svg viewBox="0 0 190 56" xmlns="http://www.w3.org/2000/svg" role="img">
+        <title>M.R. Beauty</title>
+        <text class="lg-mono" x="95" y="36" text-anchor="middle" font-size="38" fill="var(--antracit)" letter-spacing="1">MR</text>
+        <text class="lg-sub" x="95" y="50" text-anchor="middle" font-size="8.5" fill="var(--braon)" letter-spacing="5.5">BEAUTY</text>
+      </svg>
+    </a>
+
     <nav class="nav-links">
-      <a href="#pocetna">Početna</a>
-      <a href="#usluge">Usluge</a>
-      <a href="#galerija">Galerija</a>
-      <a href="#o-nama">O nama</a>
-      <a href="#blog">Blog</a>
+      <a href="#pocetna" data-i18n="nav.home">Početna</a>
+      <a href="#usluge" data-i18n="nav.services">Usluge</a>
+      <a href="#galerija" data-i18n="nav.gallery">Galerija</a>
+      <a href="#o-nama" data-i18n="nav.about">O nama</a>
+      <a href="#blog" data-i18n="nav.blog">Blog</a>
+      <a href="#lokacija" data-i18n="nav.location">Lokacija</a>
       <a href="https://www.instagram.com/mr.beautyconcept?igsh=aHhmZGNsODFhcTFs"
          class="nav-ig" target="_blank" rel="noopener noreferrer"
-         aria-label="M.R. Beauty na Instagramu">
+         aria-label="Instagram">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="2" y="2" width="20" height="20" rx="5"/>
@@ -767,18 +801,28 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
           <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
         </svg>
       </a>
-      <a href="#zakazivanje" class="nav-cta">Zakaži</a>
+      <a href="#zakazivanje" class="nav-cta" data-i18n="nav.book">Zakaži</a>
     </nav>
-    <button id="burger" aria-label="Meni" aria-expanded="false" aria-controls="mobmenu">
-      <span></span><span></span><span></span>
-    </button>
+
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Jezik / Language">
+        <button type="button" data-lang="sr" class="on">SRB</button>
+        <button type="button" data-lang="en">ENG</button>
+      </div>
+      <button id="burger" aria-label="Meni" aria-expanded="false" aria-controls="mobmenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
+
   <div id="mobmenu">
     <div class="mobmenu-inner">
-      <a href="#usluge">Usluge</a>
-      <a href="#galerija">Galerija</a>
-      <a href="#o-nama">O nama</a>
-      <a href="#blog">Blog</a>
+      <a href="#pocetna" data-i18n="nav.home">Početna</a>
+      <a href="#usluge" data-i18n="nav.services">Usluge</a>
+      <a href="#galerija" data-i18n="nav.gallery">Galerija</a>
+      <a href="#o-nama" data-i18n="nav.about">O nama</a>
+      <a href="#blog" data-i18n="nav.blog">Blog</a>
+      <a href="#lokacija" data-i18n="nav.location">Lokacija</a>
       <a href="https://www.instagram.com/mr.beautyconcept?igsh=aHhmZGNsODFhcTFs"
          class="mobmenu-ig" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
@@ -789,40 +833,39 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
         </svg>
         Instagram
       </a>
-      <a href="#zakazivanje" class="nav-cta">Zakaži termin</a>
+      <a href="#zakazivanje" class="nav-cta" data-i18n="nav.bookLong">Zakaži termin</a>
     </div>
   </div>
 </header>
 
 <!-- ══════════ HERO ══════════ -->
 <section id="pocetna">
-  <img src="hero.png" alt="M.R. Beauty — sauna i džakuzi u wellness zoni salona"
-       fetchpriority="high" decoding="async" class="hero-img">
+  <img src="hero.png" alt="M.R. Beauty" fetchpriority="high" decoding="async" class="hero-img">
   <div class="hero-veil-1"></div>
   <div class="hero-veil-2"></div>
 
   <div class="wrap hero-inner">
     <div class="hero-copy">
-      <p class="hero-kicker">Kragujevac · od 2018.</p>
-      <h1 class="hero-title">
+      <p class="hero-kicker" data-i18n="hero.kicker">Kragujevac · od 2018.</p>
+      <h1 class="hero-title" data-i18n-html="hero.title">
         Uđete umorni.<br>
         <em>Izađete kao svoja</em><br>
         najbolja verzija.
       </h1>
       <div class="hairline hero-rule"></div>
-      <p class="hero-text">
+      <p class="hero-text" data-i18n="hero.text">
         Trajna šminka, SPA tretmani i nega koja se ne završava na vratima salona.
         Marija Radovanović i tim koji vas pamti po imenu.
       </p>
       <div class="hero-btns">
-        <a href="#zakazivanje" class="btn btn--solid">Zakaži termin</a>
-        <a href="#galerija" class="btn btn--ghost">Pogledaj radove</a>
+        <a href="#zakazivanje" class="btn btn--solid" data-i18n="hero.cta1">Zakaži termin</a>
+        <a href="#galerija" class="btn btn--ghost" data-i18n="hero.cta2">Pogledaj radove</a>
       </div>
     </div>
   </div>
 
   <div class="scroll-hint">
-    <span>Skrolujte</span>
+    <span data-i18n="hero.scroll">Skrolujte</span>
     <div class="vline"></div>
   </div>
 </section>
@@ -831,51 +874,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <section id="usluge" class="section">
   <div class="wrap">
     <div class="sec-head fade-up">
-      <p class="eyebrow">Šta radimo</p>
-      <h2>Četiri načina da vam vratimo sat vremena dnevno — i mir u glavi</h2>
+      <p class="eyebrow" data-i18n="services.eyebrow">Šta radimo</p>
+      <h2 data-i18n="services.title">Četiri načina da vam vratimo sat vremena dnevno — i mir u glavi</h2>
     </div>
-
-    <div class="usluge-grid">
-      <article class="usluga fade-up">
-        <div class="usluga-media">
-          <img src="puder-obrve.png" alt="Trajna šminka — puder obrve" loading="lazy" decoding="async">
-        </div>
-        <h3>Trajna šminka</h3>
-        <div class="hairline"></div>
-        <p>Puder obrve, lip blush, ajlajner. Budite se sređeni — bez ogledala i bez žurbe.</p>
-        <p class="cena">od 18.000 RSD</p>
-      </article>
-
-      <article class="usluga fade-up">
-        <div class="usluga-media">
-          <img src="spa-tretman.png" alt="Beauty SPA i masaže" loading="lazy" decoding="async">
-        </div>
-        <h3>Beauty SPA &amp; Masaže</h3>
-        <div class="hairline"></div>
-        <p>Relax, sportska, anticelulit, LUX paket. Devedeset minuta u kojima telo prestane da se brani.</p>
-        <p class="cena">od 3.500 RSD</p>
-      </article>
-
-      <article class="usluga fade-up">
-        <div class="usluga-media">
-          <img src="edukacija.png" alt="Edukacije" loading="lazy" decoding="async">
-        </div>
-        <h3>Edukacije</h3>
-        <div class="hairline"></div>
-        <p>Obuke za trajnu šminku i negu, u malim grupama. Sertifikat, model i podrška posle kursa.</p>
-        <p class="cena">Na upit</p>
-      </article>
-
-      <article class="usluga fade-up">
-        <div class="usluga-media">
-          <img src="manikir.png" alt="Manikir i pedikir" loading="lazy" decoding="async">
-        </div>
-        <h3>Manikir &amp; Pedikir</h3>
-        <div class="hairline"></div>
-        <p>Klasičan, gel, japanski. Ruke koje ne krijete kada nekome pružate vizit-kartu.</p>
-        <p class="cena">od 1.800 RSD</p>
-      </article>
-    </div>
+    <div class="usluge-grid" id="usluge-grid"></div>
   </div>
 </section>
 
@@ -884,26 +886,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div class="wrap">
     <div class="gal-head fade-up">
       <div>
-        <p class="eyebrow">Galerija</p>
-        <h2>Radovi, ne obećanja</h2>
+        <p class="eyebrow" data-i18n="gallery.eyebrow">Galerija</p>
+        <h2 data-i18n="gallery.title">Radovi, ne obećanja</h2>
       </div>
-      <p class="note">Sve fotografije su iz našeg salona. Kliknite na bilo koju da je vidite u punoj veličini.</p>
+      <p class="note" data-i18n="gallery.note">Sve fotografije su iz našeg salona. Kliknite na bilo koju da je vidite u punoj veličini.</p>
     </div>
-
-    <div id="tabs">
-      <button class="tab active" data-cat="sve">Sve<span class="tab-line"></span></button>
-      <button class="tab" data-cat="sminka">Trajna šminka<span class="tab-line"></span></button>
-      <button class="tab" data-cat="spa">Beauty SPA &amp; Masaže<span class="tab-line"></span></button>
-      <button class="tab" data-cat="edukacije">Edukacije<span class="tab-line"></span></button>
-      <button class="tab" data-cat="nokti">Manikir &amp; Pedikir<span class="tab-line"></span></button>
-    </div>
-
+    <div id="tabs"></div>
     <div id="grid"></div>
   </div>
 </section>
 
 <!-- ══════════ LIGHTBOX ══════════ -->
-<div id="lightbox" role="dialog" aria-modal="true" aria-label="Pregled fotografije">
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Galerija">
   <button id="lb-close" class="lb-btn" aria-label="Zatvori">&times;</button>
   <button id="lb-prev" class="lb-btn" aria-label="Prethodna">&#8249;</button>
   <button id="lb-next" class="lb-btn" aria-label="Sledeća">&#8250;</button>
@@ -923,18 +917,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
       <div><img src="vlasnica-png.png" alt="Marija Radovanović" loading="lazy" decoding="async"></div>
     </div>
     <div class="about-copy fade-up">
-      <p class="eyebrow">O nama</p>
-      <h2>Sedam godina jedne iste odluke — da niko ne izađe nezadovoljan</h2>
+      <p class="eyebrow" data-i18n="about.eyebrow">O nama</p>
+      <h2 data-i18n="about.title">Sedam godina jedne iste odluke — da niko ne izađe nezadovoljan</h2>
       <div class="hairline"></div>
       <div class="about-text">
-        <p>Marija Radovanović je počela u jednoj sobi, sa jednim stolom i listom klijenata koju je znala napamet. Danas M.R. Beauty ima tim, ali lista se i dalje zna napamet.</p>
-        <p>Ono što se nije menjalo: nijedan tretman ne počinje dok ne sednemo i ne pričamo. Kakva vam je koža, koliko vremena ujutru zaista imate, šta vas je do sada razočaralo kod drugih. Tek onda pigment, tehnika, termin.</p>
-        <p>Zato kod nas nema „standardnih“ obrva. Ima vaših.</p>
+        <p data-i18n="about.p1">Marija Radovanović je počela u jednoj sobi, sa jednim stolom i listom klijenata koju je znala napamet. Danas M.R. Beauty ima tim, ali lista se i dalje zna napamet.</p>
+        <p data-i18n="about.p2">Ono što se nije menjalo: nijedan tretman ne počinje dok ne sednemo i ne pričamo. Kakva vam je koža, koliko vremena ujutru zaista imate, šta vas je do sada razočaralo kod drugih. Tek onda pigment, tehnika, termin.</p>
+        <p data-i18n="about.p3">Zato kod nas nema „standardnih“ obrva. Ima vaših.</p>
       </div>
       <div class="stats">
-        <div><p class="num">7</p><p class="lbl">godina rada</p></div>
-        <div><p class="num">2400+</p><p class="lbl">klijenata</p></div>
-        <div><p class="num">120+</p><p class="lbl">polaznika</p></div>
+        <div><p class="num">7</p><p class="lbl" data-i18n="about.stat1">godina rada</p></div>
+        <div><p class="num">2400+</p><p class="lbl" data-i18n="about.stat2">klijenata</p></div>
+        <div><p class="num">120+</p><p class="lbl" data-i18n="about.stat3">polaznika</p></div>
       </div>
     </div>
   </div>
@@ -944,115 +938,88 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <section id="zakazivanje" class="section section--bez">
   <div class="wrap-sm">
     <div class="wiz-head fade-up">
-      <p class="eyebrow">Zakazivanje</p>
-      <h2>Rezervišite svoja dva sata mira</h2>
-      <p class="lead">Bez poziva, bez čekanja na odgovor u porukama. Tri koraka — potvrdu dobijate isti dan.</p>
+      <p class="eyebrow" data-i18n="book.eyebrow">Zakazivanje</p>
+      <h2 data-i18n="book.title">Rezervišite svoja dva sata mira</h2>
+      <p class="lead" data-i18n="book.lead">Bez poziva, bez čekanja na odgovor u porukama. Tri koraka — potvrdu dobijate isti dan.</p>
     </div>
 
-    <!-- ┌──────────────────────────────────────────────────────────┐
-         │  Prijave stižu na: nvukic1993@gmail.com                   │
-         │  Prva poslata prijava stiže kao zahtev za potvrdu od      │
-         │  FormSubmit — klikni link u tom mejlu i forma je aktivna. │
-         └──────────────────────────────────────────────────────────┘ -->
-    <form id="wizard"
-          action="https://formsubmit.co/nvukic1993@gmail.com"
-          method="POST">
-
-      <!-- FormSubmit podešavanja -->
+    <form id="wizard" action="https://formsubmit.co/nvukic1993@gmail.com" method="POST">
       <input type="hidden" name="_subject" value="Nova prijava za termin — M.R. Beauty">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_next" id="wizNext" value="">
-      <!-- Honeypot: boti popunjavaju, ljudi ne vide -->
       <input type="text" name="_honey" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-      <!-- Popunjava JavaScript iz koraka 1 i 2 -->
       <input type="hidden" name="Usluga" id="fUsluga">
       <input type="hidden" name="Datum"  id="fDatum">
       <input type="hidden" name="Vreme"  id="fVreme">
 
       <div class="wiz-track">
-        <div class="wstep is-now" data-s="1"><span class="wstep-n">01</span> <span class="wstep-t">Usluga</span></div>
-        <div class="wstep" data-s="2"><span class="wstep-n">02</span> <span class="wstep-t">Termin</span></div>
-        <div class="wstep" data-s="3"><span class="wstep-n">03</span> <span class="wstep-t">Podaci</span></div>
+        <div class="wstep is-now" data-s="1"><span class="wstep-n">01</span> <span class="wstep-t" data-i18n="book.step1">Usluga</span></div>
+        <div class="wstep" data-s="2"><span class="wstep-n">02</span> <span class="wstep-t" data-i18n="book.step2">Termin</span></div>
+        <div class="wstep" data-s="3"><span class="wstep-n">03</span> <span class="wstep-t" data-i18n="book.step3">Podaci</span></div>
       </div>
 
       <div class="wiz-stage" id="wizStage">
-
-        <!-- KORAK 1 -->
         <div class="wiz-pane is-active" data-pane="1">
-          <h3>Šta vas dovodi kod nas?</h3>
-          <p class="wiz-sub">Izaberite jednu oblast — tačnu uslugu biramo zajedno na terminu.</p>
+          <h3 data-i18n="book.q1">Šta vas dovodi kod nas?</h3>
+          <p class="wiz-sub" data-i18n="book.q1sub">Izaberite jednu oblast — tačnu uslugu biramo zajedno na terminu.</p>
           <div class="wiz-cards" id="wizKategorije"></div>
         </div>
 
-        <!-- KORAK 2 -->
         <div class="wiz-pane" data-pane="2">
-          <h3>Izaberite datum i vreme</h3>
-          <p class="wiz-sub">Nedeljom ne radimo. Zauzeti termini su precrtani.</p>
+          <h3 data-i18n="book.q2">Izaberite datum i vreme</h3>
+          <p class="wiz-sub" data-i18n="book.q2sub">Nedeljom ne radimo. Zauzeti termini su precrtani.</p>
           <div class="wiz-two">
             <div>
-              <p class="wiz-lbl">Naredni dani</p>
+              <p class="wiz-lbl" data-i18n="book.days">Naredni dani</p>
               <div id="wizDani"></div>
             </div>
             <div>
-              <p class="wiz-lbl">Slobodno vreme</p>
-              <div id="wizTermini">
-                <p class="wiz-empty">Prvo izaberite dan.</p>
-              </div>
+              <p class="wiz-lbl" data-i18n="book.times">Slobodno vreme</p>
+              <div id="wizTermini"><p class="wiz-empty" data-i18n="book.pickDay">Prvo izaberite dan.</p></div>
             </div>
           </div>
         </div>
 
-        <!-- KORAK 3 -->
         <div class="wiz-pane" data-pane="3">
-          <h3>Vaši podaci</h3>
-          <p class="wiz-sub">Zovemo vas samo da potvrdimo termin.</p>
+          <h3 data-i18n="book.q3">Vaši podaci</h3>
+          <p class="wiz-sub" data-i18n="book.q3sub">Zovemo vas samo da potvrdimo termin.</p>
           <div class="wiz-form">
             <label class="wiz-field">
-              <span>Ime i prezime</span>
+              <span data-i18n="book.name">Ime i prezime</span>
               <input id="wIme" name="Ime i prezime" type="text" autocomplete="name" class="wiz-input">
             </label>
             <label class="wiz-field">
-              <span>Broj telefona</span>
+              <span data-i18n="book.phone">Broj telefona</span>
               <input id="wTel" name="Telefon" type="tel" autocomplete="tel" class="wiz-input">
             </label>
             <label class="wiz-field">
-              <span>Napomena <em class="opt">(opciono)</em></span>
-              <textarea id="wNap" name="Napomena" rows="2" class="wiz-input"
+              <span data-i18n-html="book.note">Napomena <em class="opt">(opciono)</em></span>
+              <textarea id="wNap" name="Napomena" rows="2" class="wiz-input" data-i18n-ph="book.notePh"
                         placeholder="Alergije, prethodni tretmani, pitanja..."></textarea>
             </label>
           </div>
           <div id="wizSazetak"></div>
-          <p id="wizGreska" class="hidden">Unesite ime i broj telefona da bismo mogli da potvrdimo termin.</p>
+          <p id="wizGreska" class="hidden"></p>
         </div>
 
-        <!-- POTVRDA -->
         <div class="wiz-pane wiz-pane--ok" data-pane="4">
           <div class="wiz-check">&#10003;</div>
-          <h3>Uspešno ste poslali prijavu</h3>
+          <h3 data-i18n="book.okTitle">Uspešno ste poslali prijavu</h3>
           <p id="wizPotvrdaTekst"></p>
           <a href="https://www.instagram.com/mr.beautyconcept?igsh=aHhmZGNsODFhcTFs"
-             class="wiz-ig" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="2" y="2" width="20" height="20" rx="5"/>
-              <circle cx="12" cy="12" r="4"/>
-              <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
-            </svg>
+             class="wiz-ig" target="_blank" rel="noopener noreferrer" data-i18n="book.follow">
             Zapratite nas u međuvremenu
           </a>
         </div>
-
       </div>
 
       <div id="wizNav">
-        <button id="wizNazad" type="button" disabled>Nazad</button>
+        <button id="wizNazad" type="button" disabled data-i18n="book.back">Nazad</button>
         <button id="wizNapred" type="button" class="wiz-cta" disabled>
-          <span id="wizNapredTekst">Dalje</span>
+          <span id="wizNapredTekst" data-i18n="book.next">Dalje</span>
         </button>
       </div>
-
     </form>
   </div>
 </section>
@@ -1062,8 +1029,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   <div class="wrap">
     <div class="blog-head fade-up">
       <div>
-        <p class="eyebrow">Blog</p>
-        <h2>Pišemo o onome što nas pitate</h2>
+        <p class="eyebrow" data-i18n="blog.eyebrow">Blog</p>
+        <h2 data-i18n="blog.title">Pišemo o onome što nas pitate</h2>
       </div>
     </div>
     <div id="blog-grid"></div>
@@ -1073,7 +1040,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <!-- ══════════ BLOG — PUN TEKST ══════════ -->
 <div id="artikal" role="dialog" aria-modal="true" aria-labelledby="art-naslov">
   <article class="art-box">
-    <button id="art-close" aria-label="Zatvori tekst">&times;</button>
+    <button id="art-close" aria-label="Zatvori">&times;</button>
     <div class="art-hero"><img id="art-slika" src="" alt=""></div>
     <div class="art-body">
       <div class="post-meta">
@@ -1085,20 +1052,92 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
       <div class="hairline"></div>
       <div class="art-text" id="art-telo"></div>
       <div class="art-cta">
-        <a href="#zakazivanje" class="btn btn--solid" id="art-zakazi">Zakaži termin</a>
-        <p>Imate pitanje? Pišite nam na Instagramu.</p>
+        <a href="#zakazivanje" class="btn btn--solid" id="art-zakazi" data-i18n="hero.cta1">Zakaži termin</a>
+        <p data-i18n="blog.ctaNote">Imate pitanje? Pišite nam na Instagramu.</p>
       </div>
     </div>
   </article>
 </div>
+
+<!-- ══════════ LOKACIJA ══════════ -->
+<section id="lokacija" class="section section--bez">
+  <div class="wrap">
+    <div class="mapa-grid">
+      <div class="mapa-info fade-up">
+        <p class="eyebrow" data-i18n="loc.eyebrow">Lokacija</p>
+        <h2 data-i18n="loc.title">Nađite nas u centru Kragujevca</h2>
+        <div class="hairline"></div>
+        <div class="kontakt-list">
+
+          <div class="kontakt-row">
+            <span class="kontakt-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </span>
+            <div>
+              <p class="k-lbl" data-i18n="loc.addr">Adresa</p>
+              <p class="k-val">Kralja Aleksandra Karađorđevića<br>Kragujevac, <span data-i18n="loc.country">Srbija</span></p>
+            </div>
+          </div>
+
+          <div class="kontakt-row">
+            <span class="kontakt-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 2"/>
+              </svg>
+            </span>
+            <div>
+              <p class="k-lbl" data-i18n="loc.hours">Radno vreme</p>
+              <p class="k-val"><span data-i18n="loc.hoursDays">Ponedeljak — Subota</span><br>09:30 — 21:00</p>
+            </div>
+          </div>
+
+          <div class="kontakt-row">
+            <span class="kontakt-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/>
+              </svg>
+            </span>
+            <div>
+              <p class="k-lbl" data-i18n="loc.phone">Telefon</p>
+              <a href="tel:+381652747077" class="k-val">065 274 7077</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="mapa-okvir fade-up">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11477.6599536531!2d20.893228353856852!3d44.01281821496075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4757218fc5141d69%3A0x7d7a5cc39b18d2d3!2sM.R.%20Beauty%20Concept!5e0!3m2!1ssr!2sat!4v1784853750697!5m2!1ssr!2sat"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          title="M.R. Beauty Concept — Google Maps"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ══════════ FOOTER ══════════ -->
 <footer>
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <p class="foot-logo">M.R. <span>BEAUTY</span></p>
-        <p class="foot-about">Salon lepote i wellnessa u Kragujevcu. Trajna šminka, SPA, nega i edukacije.</p>
+        <div class="foot-logo">
+          <svg viewBox="0 0 260 132" xmlns="http://www.w3.org/2000/svg" role="img">
+            <title>M.R. Beauty — Marija Radovanović</title>
+            <text class="lg-mono" x="130" y="52" text-anchor="middle" font-size="54" fill="var(--zlatna)" letter-spacing="1">MR</text>
+            <text class="lg-sub" x="130" y="74" text-anchor="middle" font-size="12" fill="var(--zlatna)" letter-spacing="7">BEAUTY</text>
+            <text class="lg-sig" x="130" y="112" text-anchor="middle" font-size="27" fill="var(--zlatna)">Marija Radovanović</text>
+          </svg>
+        </div>
+        <p class="foot-about" data-i18n="foot.about">Salon lepote i wellnessa u Kragujevcu. Trajna šminka, SPA, nega i edukacije.</p>
         <div class="foot-social">
           <a href="https://www.instagram.com/mr.beautyconcept?igsh=aHhmZGNsODFhcTFs"
              class="foot-ig" target="_blank" rel="noopener noreferrer">
@@ -1112,21 +1151,22 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
           </a>
         </div>
       </div>
+
       <div>
-        <p class="foot-h">Kontakt</p>
+        <p class="foot-h" data-i18n="foot.contact">Kontakt</p>
         <div class="foot-list">
-          <p>Kragujevac, Srbija</p>
-          <p><a href="tel:+3816xxxxxxx">+381 6x xxx xxxx</a></p>
-          <p><a href="mailto:info@mrbeauty.rs">info@mrbeauty.rs</a></p>
-          <p><a href="#zakazivanje">Zakaži termin online</a></p>
+          <p>Kralja Aleksandra Karađorđevića<br>Kragujevac, <span data-i18n="loc.country">Srbija</span></p>
+          <p><a href="tel:+381652747077">065 274 7077</a></p>
+          <p><a href="#lokacija" data-i18n="foot.map">Pogledaj na mapi</a></p>
+          <p><a href="#zakazivanje" data-i18n="foot.bookOnline">Zakaži termin online</a></p>
         </div>
       </div>
+
       <div>
-        <p class="foot-h">Radno vreme</p>
+        <p class="foot-h" data-i18n="loc.hours">Radno vreme</p>
         <div class="foot-list">
-          <p>Ponedeljak — Petak · 09—20h</p>
-          <p>Subota · 09—15h</p>
-          <p>Nedelja · zatvoreno</p>
+          <p><span data-i18n="foot.monSat">Ponedeljak — Subota</span> · 09:30—21:00</p>
+          <p><span data-i18n="foot.sun">Nedelja</span> · <span data-i18n="foot.closed">zatvoreno</span></p>
         </div>
       </div>
     </div>
@@ -1135,47 +1175,219 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   </div>
 </footer>
 <script>
-/* ═══════════ PODACI ═══════════ */
-const IG_LINK = 'https://www.instagram.com/mr.beautyconcept?igsh=aHhmZGNsODFhcTFs';
+/* ═══════════════════════════════════════════════════════════
+   PREVODI — sve na jednom mestu.
+   Za izmenu teksta: nađite ključ i izmenite sr / en vrednost.
+   ═══════════════════════════════════════════════════════════ */
+const T = {
+sr:{
+  "nav.home":"Početna", "nav.services":"Usluge", "nav.gallery":"Galerija",
+  "nav.about":"O nama", "nav.blog":"Blog", "nav.location":"Lokacija",
+  "nav.book":"Zakaži", "nav.bookLong":"Zakaži termin",
 
-const galerija = [
-  {cat:'sminka',    src:'puder-obrve.png', naslov:'Puder obrve — prirodan finiš',  kat:'Trajna šminka'},
-  {cat:'sminka',    src:'alajner.png',     naslov:'Trajni ajlajner — nežna linija', kat:'Trajna šminka'},
-  {cat:'sminka',    src:'blog-sminka.png', naslov:'Jutro bez šminkanja',            kat:'Trajna šminka'},
-  {cat:'spa',       src:'spa-tretman.png', naslov:'Masaža toplim kamenjem',         kat:'Beauty SPA'},
-  {cat:'spa',       src:'hero.png',        naslov:'Sauna i džakuzi',                kat:'Beauty SPA'},
-  {cat:'spa',       src:'blog-sters.png',  naslov:'Prostor za odmor',               kat:'Beauty SPA'},
-  {cat:'edukacije', src:'edukacija.png',   naslov:'Obuka za trajnu šminku',         kat:'Edukacije'},
-  {cat:'edukacije', src:'tetovaza.png',    naslov:'Fine line tetovaža',             kat:'Edukacije'},
-  {cat:'nokti',     src:'manikir.png',     naslov:'Gel manikir — nude',             kat:'Manikir & Pedikir'},
-  {cat:'nokti',     src:'pedikir.png',     naslov:'Medicinski pedikir',             kat:'Manikir & Pedikir'},
-  {cat:'nokti',     src:'laser.png',       naslov:'Lasersko uklanjanje dlačica',    kat:'Manikir & Pedikir'}
+  "hero.kicker":"Kragujevac · od 2018.",
+  "hero.title":"Uđete umorni.<br><em>Izađete kao svoja</em><br>najbolja verzija.",
+  "hero.text":"Trajna šminka, SPA tretmani i nega koja se ne završava na vratima salona. Marija Radovanović i tim koji vas pamti po imenu.",
+  "hero.cta1":"Zakaži termin", "hero.cta2":"Pogledaj radove", "hero.scroll":"Skrolujte",
+
+  "services.eyebrow":"Šta radimo",
+  "services.title":"Četiri načina da vam vratimo sat vremena dnevno — i mir u glavi",
+  "srv.1.t":"Trajna šminka",
+  "srv.1.d":"Puder obrve, lip blush, ajlajner. Budite se sređeni — bez ogledala i bez žurbe.",
+  "srv.1.p":"od 18.000 RSD",
+  "srv.2.t":"Beauty SPA & Masaže",
+  "srv.2.d":"Relax, sportska, anticelulit, LUX paket. Devedeset minuta u kojima telo prestane da se brani.",
+  "srv.2.p":"od 3.500 RSD",
+  "srv.3.t":"Edukacije",
+  "srv.3.d":"Obuke za trajnu šminku i negu, u malim grupama. Sertifikat, model i podrška posle kursa.",
+  "srv.3.p":"Na upit",
+  "srv.4.t":"Manikir & Pedikir",
+  "srv.4.d":"Klasičan, gel, japanski. Ruke koje ne krijete kada nekome pružate vizit-kartu.",
+  "srv.4.p":"od 1.800 RSD",
+
+  "gallery.eyebrow":"Galerija", "gallery.title":"Radovi, ne obećanja",
+  "gallery.note":"Sve fotografije su iz našeg salona. Kliknite na bilo koju da je vidite u punoj veličini.",
+  "cat.sve":"Sve", "cat.sminka":"Trajna šminka", "cat.spa":"Beauty SPA & Masaže",
+  "cat.edukacije":"Edukacije", "cat.nokti":"Manikir & Pedikir",
+  "g.1":"Puder obrve — prirodan finiš", "g.2":"Trajni ajlajner — nežna linija",
+  "g.3":"Jutro bez šminkanja", "g.4":"Masaža toplim kamenjem", "g.5":"Sauna i džakuzi",
+  "g.6":"Prostor za odmor", "g.7":"Obuka za trajnu šminku", "g.8":"Fine line tetovaža",
+  "g.9":"Gel manikir — nude", "g.10":"Medicinski pedikir", "g.11":"Lasersko uklanjanje dlačica",
+
+  "about.eyebrow":"O nama",
+  "about.title":"Sedam godina jedne iste odluke — da niko ne izađe nezadovoljan",
+  "about.p1":"Marija Radovanović je počela u jednoj sobi, sa jednim stolom i listom klijenata koju je znala napamet. Danas M.R. Beauty ima tim, ali lista se i dalje zna napamet.",
+  "about.p2":"Ono što se nije menjalo: nijedan tretman ne počinje dok ne sednemo i ne pričamo. Kakva vam je koža, koliko vremena ujutru zaista imate, šta vas je do sada razočaralo kod drugih. Tek onda pigment, tehnika, termin.",
+  "about.p3":"Zato kod nas nema „standardnih“ obrva. Ima vaših.",
+  "about.stat1":"godina rada", "about.stat2":"klijenata", "about.stat3":"polaznika",
+
+  "book.eyebrow":"Zakazivanje", "book.title":"Rezervišite svoja dva sata mira",
+  "book.lead":"Bez poziva, bez čekanja na odgovor u porukama. Tri koraka — potvrdu dobijate isti dan.",
+  "book.step1":"Usluga", "book.step2":"Termin", "book.step3":"Podaci",
+  "book.q1":"Šta vas dovodi kod nas?",
+  "book.q1sub":"Izaberite jednu oblast — tačnu uslugu biramo zajedno na terminu.",
+  "book.c1t":"Trajna šminka", "book.c1d":"Obrve, usne, ajlajner",
+  "book.c2t":"Manikir", "book.c2d":"Gel, klasičan, pedikir",
+  "book.c3t":"SPA", "book.c3d":"Masaže, sauna, paketi",
+  "book.c4t":"Edukacije", "book.c4d":"Obuke i konsultacije",
+  "book.q2":"Izaberite datum i vreme",
+  "book.q2sub":"Nedeljom ne radimo. Zauzeti termini su precrtani.",
+  "book.days":"Naredni dani", "book.times":"Slobodno vreme", "book.pickDay":"Prvo izaberite dan.",
+  "book.q3":"Vaši podaci", "book.q3sub":"Zovemo vas samo da potvrdimo termin.",
+  "book.name":"Ime i prezime", "book.phone":"Broj telefona",
+  "book.note":"Napomena <em class=\"opt\">(opciono)</em>",
+  "book.notePh":"Alergije, prethodni tretmani, pitanja...",
+  "book.summary":"Vaš termin", "book.sService":"Usluga:", "book.sDate":"Datum:",
+  "book.at":"u",
+  "book.err":"Unesite ime i broj telefona da bismo mogli da potvrdimo termin.",
+  "book.errSend":"Slanje nije uspelo. Proverite internet vezu i pokušajte ponovo, ili nas pozovite.",
+  "book.okTitle":"Uspešno ste poslali prijavu",
+  "book.follow":"Zapratite nas u međuvremenu",
+  "book.back":"Nazad", "book.next":"Dalje", "book.confirm":"Potvrdi zakazivanje",
+  "book.sending":"Šaljem…",
+
+  "blog.eyebrow":"Blog", "blog.title":"Pišemo o onome što nas pitate",
+  "blog.read":"Pročitaj", "blog.min":"min čitanja",
+  "blog.ctaNote":"Imate pitanje? Pišite nam na Instagramu.",
+
+  "loc.eyebrow":"Lokacija", "loc.title":"Nađite nas u centru Kragujevca",
+  "loc.addr":"Adresa", "loc.hours":"Radno vreme", "loc.phone":"Telefon",
+  "loc.hoursDays":"Ponedeljak — Subota", "loc.country":"Srbija",
+
+  "foot.about":"Salon lepote i wellnessa u Kragujevcu. Trajna šminka, SPA, nega i edukacije.",
+  "foot.contact":"Kontakt", "foot.map":"Pogledaj na mapi",
+  "foot.bookOnline":"Zakaži termin online",
+  "foot.monSat":"Ponedeljak — Subota", "foot.sun":"Nedelja", "foot.closed":"zatvoreno"
+},
+en:{
+  "nav.home":"Home", "nav.services":"Services", "nav.gallery":"Gallery",
+  "nav.about":"About Us", "nav.blog":"Blog", "nav.location":"Location",
+  "nav.book":"Book", "nav.bookLong":"Book an Appointment",
+
+  "hero.kicker":"Kragujevac · since 2018",
+  "hero.title":"You walk in tired.<br><em>You leave as your</em><br>best self.",
+  "hero.text":"Permanent makeup, SPA treatments and care that doesn't end at the salon door. Marija Radovanović and a team that remembers your name.",
+  "hero.cta1":"Book an Appointment", "hero.cta2":"See our work", "hero.scroll":"Scroll",
+
+  "services.eyebrow":"What we do",
+  "services.title":"Four ways to give you back an hour a day — and peace of mind",
+  "srv.1.t":"Permanent Makeup",
+  "srv.1.d":"Powder brows, lip blush, eyeliner. Wake up ready — no mirror, no rush.",
+  "srv.1.p":"from 18,000 RSD",
+  "srv.2.t":"Beauty SPA & Massage",
+  "srv.2.d":"Relaxing, sports, anti-cellulite, LUX package. Ninety minutes where your body stops defending itself.",
+  "srv.2.p":"from 3,500 RSD",
+  "srv.3.t":"Training Courses",
+  "srv.3.d":"Permanent makeup and skincare training in small groups. Certificate, model and support after the course.",
+  "srv.3.p":"On request",
+  "srv.4.t":"Manicure & Pedicure",
+  "srv.4.d":"Classic, gel, Japanese. Hands you don't hide when handing someone your card.",
+  "srv.4.p":"from 1,800 RSD",
+
+  "gallery.eyebrow":"Gallery", "gallery.title":"Results, not promises",
+  "gallery.note":"Every photo is from our salon. Click any image to view it full size.",
+  "cat.sve":"All", "cat.sminka":"Permanent Makeup", "cat.spa":"Beauty SPA & Massage",
+  "cat.edukacije":"Training", "cat.nokti":"Manicure & Pedicure",
+  "g.1":"Powder brows — natural finish", "g.2":"Permanent eyeliner — soft line",
+  "g.3":"Mornings without makeup", "g.4":"Hot stone massage", "g.5":"Sauna and jacuzzi",
+  "g.6":"A space to rest", "g.7":"Permanent makeup training", "g.8":"Fine line tattoo",
+  "g.9":"Gel manicure — nude", "g.10":"Medical pedicure", "g.11":"Laser hair removal",
+
+  "about.eyebrow":"About Us",
+  "about.title":"Seven years of one decision — that no one leaves unhappy",
+  "about.p1":"Marija Radovanović started in one room, with one table and a client list she knew by heart. Today M.R. Beauty has a team, but the list is still known by heart.",
+  "about.p2":"What hasn't changed: no treatment begins until we sit down and talk. What your skin is like, how much time you really have in the morning, what has disappointed you elsewhere. Only then pigment, technique, appointment.",
+  "about.p3":"That's why there are no \u201Cstandard\u201D brows here. Only yours.",
+  "about.stat1":"years of work", "about.stat2":"clients", "about.stat3":"trainees",
+
+  "book.eyebrow":"Booking", "book.title":"Reserve your two hours of calm",
+  "book.lead":"No phone calls, no waiting for a reply. Three steps — you get confirmation the same day.",
+  "book.step1":"Service", "book.step2":"Time", "book.step3":"Details",
+  "book.q1":"What brings you to us?",
+  "book.q1sub":"Choose one area — we'll pick the exact treatment together at your appointment.",
+  "book.c1t":"Permanent Makeup", "book.c1d":"Brows, lips, eyeliner",
+  "book.c2t":"Manicure", "book.c2d":"Gel, classic, pedicure",
+  "book.c3t":"SPA", "book.c3d":"Massage, sauna, packages",
+  "book.c4t":"Training", "book.c4d":"Courses and consultations",
+  "book.q2":"Choose a date and time",
+  "book.q2sub":"We're closed on Sundays. Booked slots are crossed out.",
+  "book.days":"Upcoming days", "book.times":"Available times", "book.pickDay":"Please pick a day first.",
+  "book.q3":"Your details", "book.q3sub":"We only call to confirm your appointment.",
+  "book.name":"Full name", "book.phone":"Phone number",
+  "book.note":"Note <em class=\"opt\">(optional)</em>",
+  "book.notePh":"Allergies, previous treatments, questions...",
+  "book.summary":"Your appointment", "book.sService":"Service:", "book.sDate":"Date:",
+  "book.at":"at",
+  "book.err":"Please enter your name and phone number so we can confirm your appointment.",
+  "book.errSend":"Sending failed. Check your connection and try again, or give us a call.",
+  "book.okTitle":"Your request has been sent",
+  "book.follow":"Follow us in the meantime",
+  "book.back":"Back", "book.next":"Next", "book.confirm":"Confirm booking",
+  "book.sending":"Sending…",
+
+  "blog.eyebrow":"Blog", "blog.title":"We write about what you ask us",
+  "blog.read":"Read more", "blog.min":"min read",
+  "blog.ctaNote":"Have a question? Message us on Instagram.",
+
+  "loc.eyebrow":"Location", "loc.title":"Find us in the centre of Kragujevac",
+  "loc.addr":"Address", "loc.hours":"Opening hours", "loc.phone":"Phone",
+  "loc.hoursDays":"Monday — Saturday", "loc.country":"Serbia",
+
+  "foot.about":"Beauty and wellness salon in Kragujevac. Permanent makeup, SPA, skincare and training.",
+  "foot.contact":"Contact", "foot.map":"View on map",
+  "foot.bookOnline":"Book online",
+  "foot.monSat":"Monday — Saturday", "foot.sun":"Sunday", "foot.closed":"closed"
+}
+};
+
+/* ═══════════ PODACI ═══════════ */
+const usluge = [
+  {slika:'puder-obrve.png', k:'srv.1'},
+  {slika:'spa-tretman.png', k:'srv.2'},
+  {slika:'edukacija.png',   k:'srv.3'},
+  {slika:'manikir.png',     k:'srv.4'}
 ];
 
-/* ═══════════ BLOG — TEKSTOVI ═══════════
-   Za novi tekst: kopirajte jedan objekat iz niza i izmenite polja.
-   `tekst` = kratak uvod na kartici, `telo` = pun tekst u modalu.
-   ══════════════════════════════════════ */
+const galerija = [
+  {cat:'sminka',    src:'puder-obrve.png', k:'g.1',  ck:'cat.sminka'},
+  {cat:'sminka',    src:'alajner.png',     k:'g.2',  ck:'cat.sminka'},
+  {cat:'sminka',    src:'blog-sminka.png', k:'g.3',  ck:'cat.sminka'},
+  {cat:'spa',       src:'spa-tretman.png', k:'g.4',  ck:'cat.spa'},
+  {cat:'spa',       src:'hero.png',        k:'g.5',  ck:'cat.spa'},
+  {cat:'spa',       src:'blog-sters.png',  k:'g.6',  ck:'cat.spa'},
+  {cat:'edukacije', src:'edukacija.png',   k:'g.7',  ck:'cat.edukacije'},
+  {cat:'edukacije', src:'tetovaza.png',    k:'g.8',  ck:'cat.edukacije'},
+  {cat:'nokti',     src:'manikir.png',     k:'g.9',  ck:'cat.nokti'},
+  {cat:'nokti',     src:'pedikir.png',     k:'g.10', ck:'cat.nokti'},
+  {cat:'nokti',     src:'laser.png',       k:'g.11', ck:'cat.nokti'}
+];
+
+const kategorijeGal = ['sve','sminka','spa','edukacije','nokti'];
+
+const kartice = [
+  {id:'sminka',    k:'book.c1'},
+  {id:'nokti',     k:'book.c2'},
+  {id:'spa',       k:'book.c3'},
+  {id:'edukacije', k:'book.c4'}
+];
+
+/* ═══════════ BLOG — DVOJEZIČNI TEKSTOVI ═══════════
+   Za novi tekst: kopirajte jedan objekat i popunite sr i en.
+   ═════════════════════════════════════════════════ */
 const blogovi = [
-  {
-    slika:'blog-sters.png',
+{
+  slika:'blog-sters.png', vreme:'4',
+  sr:{
     tag:'SPA & mentalno zdravlje',
     naslov:'Telo pamti stres i kada ga vi zaboravite',
-    vreme:'4 min',
-    tekst:'Ne spavate loše zato što ste „nervozni“. Spavate loše jer vam ramena mesecima nisu spuštena ispod ušiju. Hronični stres se ne zadržava u glavi — sedne u trapez, u vilicu, u donji deo leđa i tu ostane.',
+    uvod:'Ne spavate loše zato što ste „nervozni“. Spavate loše jer vam ramena mesecima nisu spuštena ispod ušiju. Hronični stres se ne zadržava u glavi — sedne u trapez, u vilicu, u donji deo leđa i tu ostane.',
     telo:`
 <p>Dolazi kod nas žena od trideset osam godina i kaže: „Ništa mi nije, samo sam umorna.“ Legne na sto, spustim ruke na njena ramena i osetim dve ploče kamena. Pitam je kada joj je poslednji put neko dodirnuo leđa. Razmišlja predugo.</p>
-
 <p>To nije redak slučaj. To je pravilo.</p>
-
 <h4>Zašto stres uopšte završava u mišićima</h4>
-
 <p>Kada mozak proceni da postoji pretnja — rok na poslu, dug, svađa, nesigurnost — telo se priprema za akciju. Mišići se skraćuju, disanje postaje plitko, težina se prebacuje napred. To je koristan mehanizam kada pretnja traje minut. Problem nastaje kada traje <strong>osamnaest meseci</strong>.</p>
-
 <p>Telo ne pravi razliku između medveda i neplaćenog računa. Ostaje u istom položaju odbrane, samo mnogo duže nego što je predviđeno. Vremenom mišić prestaje da se vraća u opušteno stanje i to skraćenje postaje vaša nova „normala“. Ne primetite je jer se dešavala postepeno.</p>
-
 <h4>Kako izgleda kada se to nakupi</h4>
-
 <ul>
   <li><strong>Ramena podignuta ka ušima</strong> — trapez je u stalnoj kontrakciji, često bez ijedne bolne tačke, samo tvrd</li>
   <li><strong>Glavobolje koje kreću od potiljka</strong> — najčešće tenzione, ne migrene, iako se tako doživljavaju</li>
@@ -1183,67 +1395,73 @@ const blogovi = [
   <li><strong>Plitko disanje u grudi</strong> — dijafragma se ne spušta do kraja, pa se telo nikada ne prebaci u stanje odmora</li>
   <li><strong>San koji ne odmara</strong> — spavate sedam sati i budite se kao da niste legli</li>
 </ul>
-
 <h4>Šta masaža zaista radi — a šta ne</h4>
-
 <p>Budimo pošteni: masaža neće platiti vaše račune niti popraviti odnos koji vas iscrpljuje. Ali radi nešto što se teško postiže voljom.</p>
-
 <p>Pritisak na mišić i spor, predvidljiv ritam dodira šalju nervnom sistemu signal da je okolina bezbedna. Puls se spušta. Disanje se produbljuje. Telo prelazi iz režima odbrane u režim oporavka — i tek u tom stanju počinje stvarno da se opušta. Zato posle dobre masaže osetite težinu u nogama i mutnoću u glavi: to nije umor, to je prvi put posle mnogo vremena da vam telo nije na straži.</p>
-
 <h4>Zašto devedeset minuta, a ne trideset</h4>
-
 <p>Prvih dvadesetak minuta telo se testira. Mišić se opire, disanje ostaje plitko, glava još uvek prolazi kroz spisak obaveza. Tek negde oko trideset petog minuta dolazi prelom — telo shvati da nema šta da brani i pusti se. Sve što se dešava posle toga je stvarna korist tretmana.</p>
-
 <p>Zato u M.R. Beauty ne prodajemo tretmane od dvadeset minuta. Nema smisla platiti nešto što se prekida tačno u trenutku kada počinje da deluje.</p>
-
 <h4>Koliko često</h4>
-
 <p>Ako se prvi put vraćate telu posle dužeg vremena, korisno je da prva tri termina budu na razmaku od sedam do deset dana. Posle toga jednom mesečno je sasvim dovoljno za održavanje. Nekome je dovoljno i na šest nedelja — zavisi od posla, sna i toga koliko sedite.</p>
-
 <h4>Kada masaža nije odgovor</h4>
-
 <p>Ako bol seva niz nogu ili ruku, ako se javlja trnjenje, ako traje bez prekida i noću, ili ako je nastao posle pada ili udarca — prvo lekar, pa tek onda mi. Masaža je odlična za napetost. Nije zamena za dijagnozu.</p>
-
-<p>Sve ostalo — ramena koja ne umeju da se spuste, leđa koja tupo bole od sedenja, vilicu koja se stisne čim pomislite na ponedeljak — možemo da rešimo zajedno.</p>
-`
+<p>Sve ostalo — ramena koja ne umeju da se spuste, leđa koja tupo bole od sedenja, vilicu koja se stisne čim pomislite na ponedeljak — možemo da rešimo zajedno.</p>`
   },
-  {
-    slika:'blog-sminka.png',
+  en:{
+    tag:'SPA & mental health',
+    naslov:'The body remembers stress even when you forget it',
+    uvod:"You don't sleep badly because you're \u201Canxious.\u201D You sleep badly because your shoulders haven't dropped below your ears in months. Chronic stress doesn't stay in your head — it settles into the traps, the jaw, the lower back, and stays there.",
+    telo:`
+<p>A woman of thirty-eight comes in and says: \u201CNothing's wrong, I'm just tired.\u201D She lies down, I put my hands on her shoulders and feel two slabs of stone. I ask when someone last touched her back. She thinks about it for too long.</p>
+<p>This isn't rare. It's the rule.</p>
+<h4>Why stress ends up in muscle at all</h4>
+<p>When the brain decides there's a threat — a deadline, a debt, an argument, uncertainty — the body prepares for action. Muscles shorten, breathing goes shallow, weight shifts forward. That's a useful mechanism when the threat lasts a minute. The problem starts when it lasts <strong>eighteen months</strong>.</p>
+<p>The body doesn't distinguish between a bear and an unpaid bill. It stays in the same defensive posture, only far longer than intended. Over time the muscle stops returning to a relaxed state and that shortening becomes your new \u201Cnormal.\u201D You don't notice because it happened gradually.</p>
+<h4>What it looks like once it accumulates</h4>
+<ul>
+  <li><strong>Shoulders raised toward the ears</strong> — the trapezius in constant contraction, often with no painful spot at all, just hard</li>
+  <li><strong>Headaches starting at the base of the skull</strong> — usually tension headaches, not migraines, though they're experienced that way</li>
+  <li><strong>A clenched jaw at night</strong> — bruxism; your dentist notices before you do</li>
+  <li><strong>Shallow chest breathing</strong> — the diaphragm never fully drops, so the body never switches into rest</li>
+  <li><strong>Sleep that doesn't restore</strong> — seven hours and you wake as if you never lay down</li>
+</ul>
+<h4>What massage actually does — and what it doesn't</h4>
+<p>Let's be honest: massage won't pay your bills or fix the relationship draining you. But it does something willpower can't.</p>
+<p>Pressure on muscle and a slow, predictable rhythm of touch signal to the nervous system that the environment is safe. The pulse drops. Breathing deepens. The body shifts from defence into recovery — and only in that state does it truly begin to let go. That's why after a good massage you feel heaviness in your legs and fog in your head: that isn't fatigue, it's the first time in a long while your body hasn't been on guard.</p>
+<h4>Why ninety minutes, not thirty</h4>
+<p>For the first twenty minutes the body is testing. The muscle resists, breathing stays shallow, the mind is still running through the to-do list. Somewhere around the thirty-fifth minute the break comes — the body realises there's nothing to defend and releases. Everything after that is the real benefit of the treatment.</p>
+<p>That's why M.R. Beauty doesn't sell twenty-minute treatments. There's no sense in paying for something that stops exactly when it starts working.</p>
+<h4>How often</h4>
+<p>If you're returning to your body after a long gap, it helps to space the first three appointments seven to ten days apart. After that, once a month is plenty for maintenance. For some people every six weeks is enough — it depends on your work, your sleep, and how much you sit.</p>
+<h4>When massage isn't the answer</h4>
+<p>If pain shoots down a leg or arm, if there's numbness, if it's constant and wakes you at night, or if it started after a fall or impact — see a doctor first, then come to us. Massage is excellent for tension. It is not a substitute for diagnosis.</p>
+<p>Everything else — shoulders that won't drop, a back that aches dully from sitting, a jaw that clenches the moment you think of Monday — we can work on together.</p>`
+  }
+},
+{
+  slika:'blog-sminka.png', vreme:'5',
+  sr:{
     tag:'Trajna šminka',
     naslov:'Koliko vas zaista košta dvadeset minuta pred ogledalom',
-    vreme:'5 min',
-    tekst:'Dvadeset minuta ujutru je sto dvadeset sati godišnje. Pet punih dana koje ste proveli crtajući obrve koje će do podneva izbledeti, i onda proveravajući ih na svakom izlogu.',
+    uvod:'Dvadeset minuta ujutru je sto dvadeset sati godišnje. Pet punih dana koje ste proveli crtajući obrve koje će do podneva izbledeti, i onda proveravajući ih na svakom izlogu.',
     telo:`
 <p>Uzmite olovku i izračunajte sa nama.</p>
-
 <p>Dvadeset minuta ujutru, svakog radnog dana. To je sto sati godišnje. Dodajte vikende, izlaske, one dane kada se šminkate dva puta — dolazite blizu <strong>sto pedeset sati</strong>. Šest punih dana i noći, godišnje, ispred ogledala.</p>
-
 <p>To je ono što trajna šminka zapravo košta. Ne cena tretmana — cena njenog odsustva.</p>
-
 <h4>Šta trajna šminka jeste</h4>
-
 <p>Pigment se unosi u gornji sloj kože, plitko — mnogo plitko u odnosu na tetovažu. Zato bledi i zato ima rok trajanja. To nije mana, to je poenta: mode se menjaju, lice se menja, i dobro je da rezultat ne ostane zauvek.</p>
-
 <p>Tri najtraženija tretmana kod nas:</p>
-
 <ul>
   <li><strong>Puder obrve</strong> — najmekši, najprirodniji finiš. Izgleda kao obrva blago popunjena senkom, bez oštrih ivica. Odgovara skoro svakom tipu kože, uključujući masnu, gde tehnika dlačica ne opstaje dobro.</li>
   <li><strong>Lip blush</strong> — vraća boju usnama i vizuelno definiše ivicu bez efekta iscrtanog ruža. Posebno koristan ako su usne s godinama izgubile ton ili je kontura postala nepravilna.</li>
   <li><strong>Trajni ajlajner</strong> — od nežne linije između trepavica do izraženijeg poteza. Najveća razlika u brzini jutarnje rutine, jer je ajlajner ono što se najteže povlači ravnom rukom.</li>
 </ul>
-
 <h4>Kako izgleda proces, iskreno</h4>
-
 <p><strong>Konsultacija.</strong> Pre nego što se bilo šta dodirne, sedimo i pričamo. Oblik lica, boja kose, koliko izražen rezultat želite, šta vas je do sada odbijalo. Oblik crtamo olovkom i gledate ga u ogledalu dok ne kažete da je to to. Niko ne uzima aparat dok se ne složimo.</p>
-
 <p><strong>Tretman.</strong> Anestetska krema deluje dvadesetak minuta. Sam rad traje između sat i po i dva sata. Osećaj većina opisuje kao grebanje ili vibraciju — neprijatno, ali daleko od onoga čega se ljudi plaše.</p>
-
 <p><strong>Prvih sedam dana.</strong> Ovo je deo o kome se najmanje priča, a najviše je bitan. Prva dva-tri dana rezultat je tamniji i oštriji nego što će biti. Zatim se stvara tanka kora koja se sama ljušti. <strong>Ne dirajte je.</strong> Kada otpadne, boja izgleda preblago — mnogi se tu uplaše. Nemojte. Pigment se „vraća“ do kraja treće nedelje.</p>
-
 <p><strong>Korekcija.</strong> Posle četiri do šest nedelja dolazite ponovo. Tada se dodaje ono što koža nije primila i fino podešava oblik. Korekcija nije opcija ni znak da nešto nije uspelo — ona je sastavni deo tretmana i uračunata je u cenu.</p>
-
 <h4>Šta rezultat kvari</h4>
-
 <ul>
   <li>Sunce bez zaštite — najbrži način da pigment izbledi ili promeni ton</li>
   <li>Solarijum, sauna i bazen u prve dve nedelje</li>
@@ -1251,99 +1469,201 @@ const blogovi = [
   <li>Skidanje kore prstima</li>
   <li>Masna koža — ne kvari rezultat, ali ga brže „proguta“, pa se osvežavanje radi nešto ranije</li>
 </ul>
-
 <h4>Koliko traje</h4>
-
 <p>Realno: od godinu i po do tri godine, u zavisnosti od tipa kože, izloženosti suncu i nege. Osvežavanje se radi jednom u godinu-dve i kraće je i jeftinije od prvog tretmana.</p>
-
 <h4>Kome ne preporučujemo</h4>
-
 <p>Trudnicama i dojiljama, osobama sa aktivnom infekcijom ili ekcemom u zoni tretmana, sklonim keloidnim ožiljcima, na terapiji koja utiče na zgrušavanje krvi, i onima koji su nedavno radili botoks ili filere u toj zoni — potrebno je sačekati. Ako ste u nekoj od ovih grupa, javite nam se svejedno; često je rešenje samo u pomeranju termina.</p>
-
 <h4>Najčešće pitanje koje dobijamo</h4>
-
 <p>„Da li će izgledati kao nacrtano?“</p>
-
-<p>Ako je urađeno dobro — ne. Ljudi oko vas neće znati da ste nešto radili, samo će vam govoriti da izgledate odmorno. To je i cilj. Trajna šminka koja se primeti nije loše urađena obrva; to je obrva urađena za nečije tuđe lice.</p>
-`
+<p>Ako je urađeno dobro — ne. Ljudi oko vas neće znati da ste nešto radili, samo će vam govoriti da izgledate odmorno. To je i cilj. Trajna šminka koja se primeti nije loše urađena obrva; to je obrva urađena za nečije tuđe lice.</p>`
   },
-  {
-    slika:'alajner.png',
+  en:{
+    tag:'Permanent Makeup',
+    naslov:'What twenty minutes at the mirror actually costs you',
+    uvod:"Twenty minutes each morning is a hundred and twenty hours a year. Five full days spent drawing brows that fade by noon, then checking them in every shop window.",
+    telo:`
+<p>Take a pen and do the maths with us.</p>
+<p>Twenty minutes each morning, every working day. That's a hundred hours a year. Add weekends, nights out, the days you do your makeup twice — you're close to <strong>a hundred and fifty hours</strong>. Six full days and nights a year, in front of a mirror.</p>
+<p>That's what permanent makeup actually costs. Not the price of the treatment — the price of going without it.</p>
+<h4>What permanent makeup is</h4>
+<p>Pigment is placed into the upper layer of skin, shallow — far shallower than a tattoo. That's why it fades and why it has a lifespan. That isn't a flaw, it's the point: fashions change, faces change, and it's good that the result doesn't stay forever.</p>
+<p>Our three most requested treatments:</p>
+<ul>
+  <li><strong>Powder brows</strong> — the softest, most natural finish. It looks like a brow lightly filled with shadow, with no hard edges. Suits almost every skin type, including oily skin, where hair-stroke technique doesn't hold well.</li>
+  <li><strong>Lip blush</strong> — restores colour to the lips and visually defines the edge without the drawn-on lipstick effect. Especially useful if lips have lost tone with age or the contour has become uneven.</li>
+  <li><strong>Permanent eyeliner</strong> — from a soft line between the lashes to a more defined stroke. The biggest difference to morning routine speed, since eyeliner is the hardest thing to draw with a steady hand.</li>
+</ul>
+<h4>What the process really looks like</h4>
+<p><strong>Consultation.</strong> Before anything is touched, we sit down and talk. Face shape, hair colour, how defined you want the result, what has put you off until now. We draw the shape in pencil and you look at it in the mirror until you say that's it. Nobody picks up a machine until we agree.</p>
+<p><strong>The treatment.</strong> Numbing cream works for about twenty minutes. The work itself takes between an hour and a half and two hours. Most people describe the sensation as scratching or vibration — uncomfortable, but far from what people fear.</p>
+<p><strong>The first seven days.</strong> This is the part talked about least and matters most. For the first two or three days the result is darker and sharper than it will be. Then a thin crust forms and flakes off on its own. <strong>Don't touch it.</strong> When it falls away the colour looks too faint — many people panic here. Don't. The pigment \u201Ccomes back\u201D by the end of the third week.</p>
+<p><strong>The touch-up.</strong> After four to six weeks you come back. That's when we add what the skin didn't take and fine-tune the shape. The touch-up isn't optional, nor a sign something went wrong — it's part of the treatment and included in the price.</p>
+<h4>What ruins the result</h4>
+<ul>
+  <li>Sun without protection — the fastest way for pigment to fade or shift tone</li>
+  <li>Solarium, sauna and pool during the first two weeks</li>
+  <li>Exfoliating acids and retinol over the treated area</li>
+  <li>Picking the crust off with your fingers</li>
+  <li>Oily skin — it doesn't ruin the result, but absorbs it faster, so refreshing comes a little sooner</li>
+</ul>
+<h4>How long it lasts</h4>
+<p>Realistically: a year and a half to three years, depending on skin type, sun exposure and aftercare. Refreshing is done every year or two and is shorter and cheaper than the first treatment.</p>
+<h4>Who we don't recommend it for</h4>
+<p>Pregnant and breastfeeding women, anyone with an active infection or eczema in the treatment area, those prone to keloid scarring, anyone on medication affecting blood clotting, and those who've recently had botox or fillers in that area — you need to wait. If you're in one of these groups, get in touch anyway; often the answer is simply moving the appointment.</p>
+<h4>The question we're asked most</h4>
+<p>\u201CWill it look drawn on?\u201D</p>
+<p>If it's done well — no. People around you won't know you had anything done, they'll just tell you that you look rested. That's the goal. Permanent makeup that gets noticed isn't a badly done brow; it's a brow done for somebody else's face.</p>`
+  }
+},
+{
+  slika:'alajner.png', vreme:'3',
+  sr:{
     tag:'Nega',
     naslov:'Šta da pitate pre nego što sednete u bilo koju stolicu',
-    vreme:'3 min',
-    tekst:'Pigment, tehnika, sterilizacija, plan korekcije. Četiri pitanja koja razdvajaju salon od improvizacije — i koja bi svaki dobar majstor voleo da mu postavite.',
+    uvod:'Pigment, tehnika, sterilizacija, plan korekcije. Četiri pitanja koja razdvajaju salon od improvizacije — i koja bi svaki dobar majstor voleo da mu postavite.',
     telo:`
 <p>Ovaj tekst radi protiv nas na kratke staze. Daje vam pitanja koja možete postaviti bilo kome, uključujući i konkurenciju. Pišemo ga svejedno, jer nam se u salon prečesto vraćaju ljudi da ispravljamo nečiji tuđi rad — a to je skuplje, bolnije i sporije nego da je odmah urađeno kako treba.</p>
-
 <p>Postavite ova četiri pitanja bilo gde. Dobar majstor će se obradovati.</p>
-
 <h4>1. „Kojim pigmentom radite i mogu li da vidim kutiju?“</h4>
-
 <p>Ozbiljni pigmenti imaju proizvođača, seriju i rok trajanja odštampan na ambalaži. To nije komercijalni detalj — to je ono što određuje kako će boja izbledeti za dve godine. Jeftini pigmenti nepoznatog porekla ne blede u lepši ton; odlaze u sivo, plavo ili crveno.</p>
-
 <p>Ako neko ne želi da vam pokaže ambalažu ili odgovori uopšteno — to je odgovor.</p>
-
 <h4>2. „Kako sterilišete i šta je jednokratno?“</h4>
-
 <p>Igla mora biti otvorena pred vama, iz zapečaćenog pakovanja. Rukavice se menjaju. Radna površina je pokrivena. Sve što dolazi u kontakt sa kožom je ili jednokratno ili prošlo kroz autoklav.</p>
-
 <p>Ovo nije preterivanje. Preko krvi se prenose hepatitis B, hepatitis C i HIV, a jedina zaštita je procedura koja se poštuje svaki put, i kada niko ne gleda.</p>
-
 <p>Tražite da vidite otvaranje igle. Ako se to doživi kao uvreda — nemojte sedati.</p>
-
 <h4>3. „Pokažite mi zaceljene radove, ne sveže“</h4>
-
 <p>Ovo je najkorisnije pitanje na celoj listi i najređe se postavlja.</p>
-
 <p>Svaki rad izgleda dobro pola sata posle tretmana. Koža je blago nadražena, pigment je pun, sve je oštro i simetrično. Prava provera je fotografija <strong>iste obrve mesec dana kasnije</strong>. Tada se vidi da li je oblik ostao, da li je boja otišla u sivo, da li je pigment primljen ravnomerno.</p>
-
 <p>Tražite parove fotografija: svež rad i isti taj rad posle korekcije. Ko ih ima, taj prati svoje klijente. Ko ih nema, ne prati.</p>
-
 <h4>4. „Šta ako mi se ne dopadne — kakav je plan korekcije?“</h4>
-
 <p>Odgovor treba da bude konkretan: kada je korekcija, da li je uračunata u cenu, šta se radi ako je oblik potrebno korigovati, koliko traje i koliko se čeka.</p>
-
 <p>„Biće savršeno, ne brinite“ nije plan. To je izbegavanje pitanja.</p>
-
 <h4>Peto pitanje, koje niko ne postavlja</h4>
-
 <p>„Da li biste mi ovo uopšte preporučili?“</p>
-
 <p>Dobar majstor će vam ponekad reći ne. Da vaša koža u tom trenutku nije u stanju za tretman. Da je bolje sačekati da prođe terapija. Da oblik koji ste doneli na fotografiji neće raditi na vašem licu i evo zašto. Da vam za ono što želite zapravo treba nešto drugo.</p>
-
 <p>Neko ko nikada ne kaže ne, prodaje. Ne radi.</p>
-
 <h4>I na kraju</h4>
-
 <p>Trajna šminka i tretmani nege su intervencije na vašem licu koje traju godinama. Zaslužuju bar onoliko pitanja koliko biste postavili prilikom kupovine telefona.</p>
-
-<p>Ako vam se pitanja čine neprijatnim — nisu. Nama je najlakše da radimo sa klijentom koji tačno zna šta pita.</p>
-`
+<p>Ako vam se pitanja čine neprijatnim — nisu. Nama je najlakše da radimo sa klijentom koji tačno zna šta pita.</p>`
+  },
+  en:{
+    tag:'Skincare',
+    naslov:'What to ask before you sit in anyone\u2019s chair',
+    uvod:"Pigment, technique, sterilisation, touch-up plan. Four questions that separate a salon from improvisation — and that any good technician would be glad you asked.",
+    telo:`
+<p>This article works against us in the short term. It hands you questions you can ask anyone, our competitors included. We're writing it anyway, because people come to us far too often to correct somebody else's work — and that's more expensive, more painful and slower than having it done properly the first time.</p>
+<p>Ask these four questions anywhere. A good technician will be glad you did.</p>
+<h4>1. \u201CWhich pigment do you use, and may I see the box?\u201D</h4>
+<p>Serious pigments have a manufacturer, batch number and expiry date printed on the packaging. That isn't a commercial detail — it determines how the colour will fade in two years. Cheap pigments of unknown origin don't fade into a nicer tone; they go grey, blue or red.</p>
+<p>If someone won't show you the packaging, or answers vaguely — that is the answer.</p>
+<h4>2. \u201CHow do you sterilise, and what is single-use?\u201D</h4>
+<p>The needle must be opened in front of you, from sealed packaging. Gloves get changed. The work surface is covered. Everything touching skin is either single-use or has been through an autoclave.</p>
+<p>This isn't excessive. Hepatitis B, hepatitis C and HIV are transmitted through blood, and the only protection is a procedure followed every single time, including when nobody is watching.</p>
+<p>Ask to see the needle opened. If that's taken as an insult — don't sit down.</p>
+<h4>3. \u201CShow me healed work, not fresh work\u201D</h4>
+<p>This is the most useful question on the list and the one asked least often.</p>
+<p>Any work looks good half an hour after the treatment. The skin is slightly irritated, the pigment is full, everything is crisp and symmetrical. The real test is a photo of <strong>the same brow a month later</strong>. That's when you see whether the shape held, whether the colour went grey, whether the pigment took evenly.</p>
+<p>Ask for pairs of photos: fresh work and that same work after the touch-up. Whoever has them follows up with their clients. Whoever doesn't, doesn't.</p>
+<h4>4. \u201CWhat if I don't like it — what's the touch-up plan?\u201D</h4>
+<p>The answer should be concrete: when the touch-up happens, whether it's included in the price, what's done if the shape needs correcting, how long it takes and how long you wait.</p>
+<p>\u201CIt'll be perfect, don't worry\u201D isn't a plan. It's avoiding the question.</p>
+<h4>The fifth question, which nobody asks</h4>
+<p>\u201CWould you even recommend this for me?\u201D</p>
+<p>A good technician will sometimes tell you no. That your skin isn't in a state for the treatment right now. That it's better to wait until a course of medication finishes. That the shape in the photo you brought won't work on your face, and here's why. That what you actually need is something else.</p>
+<p>Someone who never says no is selling. Not working.</p>
+<h4>And finally</h4>
+<p>Permanent makeup and skincare treatments are interventions on your face that last for years. They deserve at least as many questions as you'd ask when buying a phone.</p>
+<p>If the questions feel awkward — they aren't. The easiest client to work with is one who knows exactly what to ask.</p>`
   }
+}
 ];
 
-/* ═══════════ GALERIJA ═══════════ */
-const grid = document.getElementById('grid');
-let trenutna = [];
+/* ═══════════════════════════════════════════════════════════
+   JEZIK
+   ═══════════════════════════════════════════════════════════ */
+let LANG = 'sr';
+function t(key){ return (T[LANG] && T[LANG][key]) || (T.sr[key]) || key; }
 
-function renderGaleriju(cat){
-  trenutna = cat === 'sve' ? galerija : galerija.filter(g => g.cat === cat);
-  grid.innerHTML = trenutna.map((g,i) => `
-    <button type="button" class="gal-item" style="animation-delay:${i*40}ms" data-i="${i}">
-      <img src="${g.src}" alt="${g.naslov}" loading="lazy" decoding="async">
-      <span class="gal-veil"><p>${g.naslov}</p></span>
+function primeniJezik(){
+  document.documentElement.lang = LANG;
+
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    el.textContent = t(el.dataset.i18n);
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    el.innerHTML = t(el.dataset.i18nHtml);
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    el.placeholder = t(el.dataset.i18nPh);
+  });
+
+  document.querySelectorAll('.lang button').forEach(b=>{
+    b.classList.toggle('on', b.dataset.lang === LANG);
+  });
+
+  renderUsluge();
+  renderTabove();
+  renderGaleriju(aktivnaKat);
+  renderKartice();
+  renderBlog();
+  osveziWizardJezik();
+
+  try{ localStorage.setItem('mrb-lang', LANG); }catch(e){}
+}
+
+function postaviJezik(l){
+  if(l === LANG) return;
+  LANG = l;
+  primeniJezik();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   USLUGE
+   ═══════════════════════════════════════════════════════════ */
+function renderUsluge(){
+  document.getElementById('usluge-grid').innerHTML = usluge.map(u=>`
+    <article class="usluga fade-up in">
+      <div class="usluga-media">
+        <img src="${u.slika}" alt="${t(u.k+'.t')}" loading="lazy" decoding="async">
+      </div>
+      <h3>${t(u.k+'.t')}</h3>
+      <div class="hairline"></div>
+      <p>${t(u.k+'.d')}</p>
+      <p class="cena">${t(u.k+'.p')}</p>
+    </article>`).join('');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GALERIJA
+   ═══════════════════════════════════════════════════════════ */
+let aktivnaKat = 'sve';
+let trenutna = [];
+const grid = document.getElementById('grid');
+
+function renderTabove(){
+  document.getElementById('tabs').innerHTML = kategorijeGal.map(c=>`
+    <button type="button" class="tab${c===aktivnaKat?' active':''}" data-cat="${c}">
+      ${t('cat.'+c)}<span class="tab-line"></span>
     </button>`).join('');
 }
 
-document.querySelectorAll('#tabs .tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#tabs .tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderGaleriju(btn.dataset.cat);
-  });
+function renderGaleriju(cat){
+  aktivnaKat = cat;
+  trenutna = cat === 'sve' ? galerija : galerija.filter(g=>g.cat===cat);
+  grid.innerHTML = trenutna.map((g,i)=>`
+    <button type="button" class="gal-item" style="animation-delay:${i*40}ms" data-i="${i}">
+      <img src="${g.src}" alt="${t(g.k)}" loading="lazy" decoding="async">
+      <span class="gal-veil"><p>${t(g.k)}</p></span>
+    </button>`).join('');
+}
+
+document.getElementById('tabs').addEventListener('click', e=>{
+  const b = e.target.closest('.tab');
+  if(!b) return;
+  document.querySelectorAll('#tabs .tab').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  renderGaleriju(b.dataset.cat);
 });
-renderGaleriju('sve');
 
 /* ═══════════ LIGHTBOX ═══════════ */
 const lb      = document.getElementById('lightbox');
@@ -1353,384 +1673,391 @@ const lbCat   = document.getElementById('lb-cat');
 let idx = 0;
 
 function prikazi(i){
+  if(!trenutna.length) return;
   idx = (i + trenutna.length) % trenutna.length;
   const g = trenutna[idx];
-  lbMedia.innerHTML = `<img src="${g.src}" alt="${g.naslov}">`;
-  lbTitle.textContent = g.naslov;
-  lbCat.textContent   = g.kat;
+  lbMedia.innerHTML = `<img src="${g.src}" alt="${t(g.k)}">`;
+  lbTitle.textContent = t(g.k);
+  lbCat.textContent   = t(g.ck);
 }
-function otvori(i){
+function otvoriLb(i){
   prikazi(i);
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-function zatvori(){
+function zatvoriLb(){
   lb.classList.remove('open');
   lbMedia.innerHTML = '';
   document.body.style.overflow = '';
 }
 
-grid.addEventListener('click', e => {
+grid.addEventListener('click', e=>{
   const b = e.target.closest('.gal-item');
-  if(b) otvori(+b.dataset.i);
+  if(b) otvoriLb(+b.dataset.i);
 });
-document.getElementById('lb-close').onclick = zatvori;
-document.getElementById('lb-next').onclick  = () => prikazi(idx + 1);
-document.getElementById('lb-prev').onclick  = () => prikazi(idx - 1);
-lb.addEventListener('click', e => { if(e.target === lb) zatvori(); });
-document.addEventListener('keydown', e => {
+document.getElementById('lb-close').onclick = zatvoriLb;
+document.getElementById('lb-next').onclick  = ()=>prikazi(idx+1);
+document.getElementById('lb-prev').onclick  = ()=>prikazi(idx-1);
+lb.addEventListener('click', e=>{ if(e.target===lb) zatvoriLb(); });
+document.addEventListener('keydown', e=>{
   if(!lb.classList.contains('open')) return;
-  if(e.key === 'Escape')     zatvori();
-  if(e.key === 'ArrowRight') prikazi(idx + 1);
-  if(e.key === 'ArrowLeft')  prikazi(idx - 1);
+  if(e.key==='Escape')     zatvoriLb();
+  if(e.key==='ArrowRight') prikazi(idx+1);
+  if(e.key==='ArrowLeft')  prikazi(idx-1);
 });
 
-/* ═══════════ WIZARD + SLANJE NA EMAIL ═══════════ */
+/* ═══════════════════════════════════════════════════════════
+   BLOG
+   ═══════════════════════════════════════════════════════════ */
+function renderBlog(){
+  document.getElementById('blog-grid').innerHTML = blogovi.map((b,i)=>{
+    const d = b[LANG];
+    return `
+    <article class="post fade-up in" data-b="${i}" tabindex="0" role="button"
+             aria-label="${d.naslov}">
+      <div class="post-media">
+        <img src="${b.slika}" alt="${d.naslov}" loading="lazy" decoding="async">
+      </div>
+      <div class="post-meta">
+        <span class="post-tag">${d.tag}</span>
+        <span class="post-dash"></span>
+        <span class="post-time">${b.vreme} ${t('blog.min')}</span>
+      </div>
+      <h3>${d.naslov}</h3>
+      <p class="post-excerpt">${d.uvod.slice(0,175)}…</p>
+      <p class="post-more">${t('blog.read')} &#8594;</p>
+    </article>`;
+  }).join('');
+}
+
 (function(){
-  const UKUPNO = 3;
-  let korak = 1;
-  let zakljucan = false;
-  let salje = false;
-  const izbor = { kat:null, katIme:null, dan:null, vreme:null };
-
-  const forma    = document.getElementById('wizard');
-  const napred   = document.getElementById('wizNapred');
-  const napredTx = document.getElementById('wizNapredTekst');
-  const nazad    = document.getElementById('wizNazad');
-  const nav      = document.getElementById('wizNav');
-  const paneli   = Array.from(document.querySelectorAll('.wiz-pane'));
-
-  /* Ako JS ne uspe, FormSubmit vraća korisnika na sajt umesto na svoju stranicu */
-  document.getElementById('wizNext').value = location.href.split('#')[0] + '#zakazivanje';
-
-  /* — Korak 1: kartice — */
-  const kartice = [
-    {id:'sminka',    ime:'Trajna šminka', opis:'Obrve, usne, ajlajner'},
-    {id:'nokti',     ime:'Manikir',       opis:'Gel, klasičan, pedikir'},
-    {id:'spa',       ime:'SPA',           opis:'Masaže, sauna, paketi'},
-    {id:'edukacije', ime:'Edukacije',     opis:'Obuke i konsultacije'}
-  ];
-
-  document.getElementById('wizKategorije').innerHTML = kartice.map(k => `
-    <button type="button" class="wiz-card" data-id="${k.id}" aria-pressed="false">
-      <span class="wiz-tick">&#10003;</span>
-      <p class="wiz-card-t">${k.ime}</p>
-      <p class="wiz-card-d">${k.opis}</p>
-    </button>`).join('');
-
-  document.querySelectorAll('.wiz-card').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.wiz-card').forEach(x => {
-        x.classList.remove('is-picked');
-        x.setAttribute('aria-pressed','false');
-      });
-      btn.classList.add('is-picked');
-      btn.setAttribute('aria-pressed','true');
-      izbor.kat    = btn.dataset.id;
-      izbor.katIme = kartice.find(k => k.id === btn.dataset.id).ime;
-      document.getElementById('fUsluga').value = izbor.katIme;
-      osveziCTA();
-    });
-  });
-
-  /* — Korak 2: dani i termini — */
-  const imenaDana = ['Ned','Pon','Uto','Sre','Čet','Pet','Sub'];
-  const meseci = ['januar','februar','mart','april','maj','jun',
-                  'jul','avgust','septembar','oktobar','novembar','decembar'];
-
-  function sledecihSest(){
-    const lista = [], d = new Date();
-    d.setHours(0,0,0,0);
-    while(lista.length < 6){
-      d.setDate(d.getDate() + 1);
-      if(d.getDay() !== 0) lista.push(new Date(d));
-    }
-    return lista;
-  }
-  const dani = sledecihSest();
-
-  function punDatum(d){
-    return `${imenaDana[d.getDay()]}, ${d.getDate()}. ${meseci[d.getMonth()]} ${d.getFullYear()}.`;
-  }
-
-  function renderDane(){
-    document.getElementById('wizDani').innerHTML = dani.map((d,i) => `
-      <button type="button" class="wiz-chip${izbor.dan === i ? ' is-picked' : ''}" data-i="${i}">
-        <span class="wiz-chip-d">${imenaDana[d.getDay()]}</span>${d.getDate()}
-      </button>`).join('');
-
-    document.querySelectorAll('#wizDani .wiz-chip').forEach(b => {
-      b.addEventListener('click', () => {
-        izbor.dan = +b.dataset.i;
-        izbor.vreme = null;
-        document.getElementById('fDatum').value = punDatum(dani[izbor.dan]);
-        document.getElementById('fVreme').value = '';
-        renderDane();
-        renderTermine();
-        osveziCTA();
-      });
-    });
-  }
-
-  function renderTermine(){
-    const d = dani[izbor.dan];
-    const sati = d.getDay() === 6
-      ? ['09:00','10:30','12:00','13:30']
-      : ['09:00','10:30','12:00','13:30','15:00','16:30','18:00'];
-
-    /* Demo zauzeća — zameniti pozivom ka pravom kalendaru */
-    const zauzeti = sati.filter((_,i) => (d.getDate() + i) % 4 === 0);
-
-    document.getElementById('wizTermini').innerHTML = sati.map(t => {
-      const z = zauzeti.includes(t);
-      return `<button type="button" class="wiz-chip${izbor.vreme === t ? ' is-picked' : ''}"
-                ${z ? 'disabled' : ''} data-t="${t}">${t}</button>`;
-    }).join('');
-
-    document.querySelectorAll('#wizTermini .wiz-chip:not([disabled])').forEach(b => {
-      b.addEventListener('click', () => {
-        izbor.vreme = b.dataset.t;
-        document.getElementById('fVreme').value = izbor.vreme;
-        renderTermine();
-        osveziCTA();
-      });
-    });
-  }
-  renderDane();
-
-  /* — Sažetak — */
-  function renderSazetak(){
-    const d = dani[izbor.dan];
-    document.getElementById('wizSazetak').innerHTML = `
-      <p class="cap">Vaš termin</p>
-      <p><span class="muted">Usluga:</span> ${izbor.katIme}</p>
-      <p><span class="muted">Datum:</span> ${punDatum(d)} u ${izbor.vreme}</p>`;
-  }
-
-  /* — Stanje dugmeta — */
-  function osveziCTA(){
-    if(salje) return;
-    let spreman;
-    if      (korak === 1) spreman = !!izbor.kat;
-    else if (korak === 2) spreman = izbor.dan !== null && !!izbor.vreme;
-    else                  spreman = true;
-    napred.disabled = !spreman;
-  }
-
-  /* — Prelaz: fade out → fade in — */
-  function idiNa(n){
-    if(zakljucan || n === korak) return;
-    zakljucan = true;
-
-    const trenutni = paneli.find(p => p.classList.contains('is-active'));
-    const sledeci  = paneli.find(p => +p.dataset.pane === n);
-
-    trenutni.classList.remove('is-active');
-
-    setTimeout(() => {
-      korak = n;
-      sledeci.classList.add('is-active');
-      document.getElementById('wizStage').scrollTop = 0;
-
-      document.querySelectorAll('.wstep').forEach(st => {
-        const i = +st.dataset.s;
-        st.classList.toggle('is-now',  i === korak);
-        st.classList.toggle('is-done', i <  korak);
-      });
-
-      nazad.disabled = korak === 1;
-      nav.style.display = korak > UKUPNO ? 'none' : '';
-      napredTx.textContent = korak === UKUPNO ? 'Potvrdi zakazivanje' : 'Dalje';
-
-      if(korak === UKUPNO) renderSazetak();
-      osveziCTA();
-      zakljucan = false;
-    }, 430);
-  }
-
-  /* — Slanje na email preko FormSubmit — */
-  async function posalji(){
-    const ime = document.getElementById('wIme').value.trim();
-    const tel = document.getElementById('wTel').value.trim();
-    const d   = dani[izbor.dan];
-
-    salje = true;
-    napred.disabled = true;
-    napred.classList.add('is-sending');
-    napredTx.textContent = 'Šaljem…';
-
-    try{
-      const odgovor = await fetch(forma.action, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(forma)
-      });
-
-      if(!odgovor.ok) throw new Error('FormSubmit: ' + odgovor.status);
-
-      document.getElementById('wizPotvrdaTekst').textContent =
-        `Hvala, ${ime.split(' ')[0]}. Zabeležili smo ${izbor.katIme.toLowerCase()} za ` +
-        `${d.getDate()}. ${meseci[d.getMonth()]} u ${izbor.vreme}. ` +
-        `Javljamo se na ${tel} u toku dana da potvrdimo.`;
-
-      salje = false;
-      napred.classList.remove('is-sending');
-      idiNa(UKUPNO + 1);
-
-    }catch(err){
-      console.error(err);
-      salje = false;
-      napred.classList.remove('is-sending');
-      napred.disabled = false;
-      napredTx.textContent = 'Potvrdi zakazivanje';
-
-      const greska = document.getElementById('wizGreska');
-      greska.textContent = 'Slanje nije uspelo. Proverite internet vezu i pokušajte ponovo, ili nas pozovite.';
-      greska.classList.remove('hidden');
-    }
-  }
-
-  /* — Klik na DALJE — */
-  napred.addEventListener('click', () => {
-    if(napred.disabled || salje) return;
-
-    if(korak === UKUPNO){
-      const ime    = document.getElementById('wIme').value.trim();
-      const tel    = document.getElementById('wTel').value.trim();
-      const greska = document.getElementById('wizGreska');
-
-      if(!ime || !tel){
-        greska.textContent = 'Unesite ime i broj telefona da bismo mogli da potvrdimo termin.';
-        greska.classList.remove('hidden');
-        return;
-      }
-      greska.classList.add('hidden');
-      posalji();
-      return;
-    }
-    idiNa(korak + 1);
-  });
-
-  nazad.addEventListener('click', () => { if(korak > 1 && !salje) idiNa(korak - 1); });
-
-  /* Enter u poljima ne šalje formu preuranjeno */
-  forma.addEventListener('submit', e => e.preventDefault());
-  forma.querySelectorAll('input').forEach(inp => {
-    inp.addEventListener('keydown', e => {
-      if(e.key === 'Enter'){ e.preventDefault(); napred.click(); }
-    });
-  });
-
-  /* — Osvetli kartice kad se dođe do zakazivanja — */
-  function probudi(){ forma.classList.add('is-awake'); }
-
-  document.querySelectorAll('a[href="#zakazivanje"]').forEach(a => {
-    a.addEventListener('click', () => setTimeout(probudi, 500));
-  });
-
-  if('IntersectionObserver' in window){
-    new IntersectionObserver((e,o) => {
-      if(e[0].isIntersecting){ probudi(); o.disconnect(); }
-    }, {threshold:.35}).observe(forma);
-  } else {
-    probudi();
-  }
-
-  osveziCTA();
-})();
-
-/* ═══════════ BLOG — KARTICE ═══════════ */
-document.getElementById('blog-grid').innerHTML = blogovi.map((b,i) => `
-  <article class="post fade-up" data-b="${i}" tabindex="0" role="button"
-           aria-label="Otvori tekst: ${b.naslov}">
-    <div class="post-media">
-      <img src="${b.slika}" alt="${b.naslov}" loading="lazy" decoding="async">
-    </div>
-    <div class="post-meta">
-      <span class="post-tag">${b.tag}</span>
-      <span class="post-dash"></span>
-      <span class="post-time">${b.vreme} čitanja</span>
-    </div>
-    <h3>${b.naslov}</h3>
-    <p class="post-excerpt">${b.tekst.slice(0,180)}…</p>
-    <p class="post-more">Pročitaj &#8594;</p>
-  </article>`).join('');
-
-/* ═══════════ BLOG — OTVARANJE PUNOG TEKSTA ═══════════ */
-(function(){
-  const modal  = document.getElementById('artikal');
-  const box    = modal.querySelector('.art-box');
-  const mreza  = document.getElementById('blog-grid');
-  let poslednjiFokus = null;
+  const modal = document.getElementById('artikal');
+  const mreza = document.getElementById('blog-grid');
+  let fokus = null;
+  let otvoreni = null;
 
   function otvoriTekst(i){
     const b = blogovi[i];
     if(!b) return;
+    otvoreni = i;
+    const d = b[LANG];
     const slika = document.getElementById('art-slika');
     slika.src = b.slika;
-    slika.alt = b.naslov;
-    document.getElementById('art-tag').textContent    = b.tag;
-    document.getElementById('art-vreme').textContent  = b.vreme + ' čitanja';
-    document.getElementById('art-naslov').textContent = b.naslov;
-    document.getElementById('art-telo').innerHTML     = b.telo;
+    slika.alt = d.naslov;
+    document.getElementById('art-tag').textContent    = d.tag;
+    document.getElementById('art-vreme').textContent  = b.vreme + ' ' + t('blog.min');
+    document.getElementById('art-naslov').textContent = d.naslov;
+    document.getElementById('art-telo').innerHTML     = d.telo;
 
-    poslednjiFokus = document.activeElement;
+    fokus = document.activeElement;
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
     modal.scrollTop = 0;
-    box.scrollTop = 0;
     document.getElementById('art-close').focus();
   }
 
   function zatvoriTekst(){
     modal.classList.remove('open');
     document.body.style.overflow = '';
-    if(poslednjiFokus && typeof poslednjiFokus.focus === 'function') poslednjiFokus.focus();
+    otvoreni = null;
+    if(fokus && fokus.focus) fokus.focus();
   }
 
-  mreza.addEventListener('click', e => {
+  window.osveziOtvoreniTekst = function(){
+    if(otvoreni !== null) otvoriTekst(otvoreni);
+  };
+
+  mreza.addEventListener('click', e=>{
     const p = e.target.closest('.post');
     if(p) otvoriTekst(+p.dataset.b);
   });
-  mreza.addEventListener('keydown', e => {
-    if(e.key !== 'Enter' && e.key !== ' ') return;
+  mreza.addEventListener('keydown', e=>{
+    if(e.key!=='Enter' && e.key!==' ') return;
     const p = e.target.closest('.post');
     if(p){ e.preventDefault(); otvoriTekst(+p.dataset.b); }
   });
-
   document.getElementById('art-close').addEventListener('click', zatvoriTekst);
-  modal.addEventListener('click', e => { if(e.target === modal) zatvoriTekst(); });
-  document.addEventListener('keydown', e => {
-    if(e.key === 'Escape' && modal.classList.contains('open')) zatvoriTekst();
+  modal.addEventListener('click', e=>{ if(e.target===modal) zatvoriTekst(); });
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Escape' && modal.classList.contains('open')) zatvoriTekst();
   });
   document.getElementById('art-zakazi').addEventListener('click', zatvoriTekst);
 })();
 
-/* ═══════════ INTERAKCIJE ═══════════ */
-const io = new IntersectionObserver(es => es.forEach(e => {
-  if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-}), {threshold:.12});
-document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+/* ═══════════════════════════════════════════════════════════
+   WIZARD
+   ═══════════════════════════════════════════════════════════ */
+const UKUPNO = 3;
+let korak = 1, zakljucan = false, salje = false;
+const izbor = { kat:null, katKey:null, dan:null, vreme:null };
+
+const forma    = document.getElementById('wizard');
+const napred   = document.getElementById('wizNapred');
+const napredTx = document.getElementById('wizNapredTekst');
+const nazad    = document.getElementById('wizNazad');
+const navW     = document.getElementById('wizNav');
+const paneli   = Array.from(document.querySelectorAll('.wiz-pane'));
+
+document.getElementById('wizNext').value = location.href.split('#')[0] + '#zakazivanje';
+
+function renderKartice(){
+  document.getElementById('wizKategorije').innerHTML = kartice.map(k=>`
+    <button type="button" class="wiz-card${izbor.kat===k.id?' is-picked':''}"
+            data-id="${k.id}" aria-pressed="${izbor.kat===k.id}">
+      <span class="wiz-tick">&#10003;</span>
+      <p class="wiz-card-t">${t(k.k+'t')}</p>
+      <p class="wiz-card-d">${t(k.k+'d')}</p>
+    </button>`).join('');
+  if(izbor.katKey) document.getElementById('fUsluga').value = t(izbor.katKey+'t');
+}
+
+document.getElementById('wizKategorije').addEventListener('click', e=>{
+  const btn = e.target.closest('.wiz-card');
+  if(!btn) return;
+  const k = kartice.find(x=>x.id===btn.dataset.id);
+  izbor.kat = k.id; izbor.katKey = k.k;
+  document.getElementById('fUsluga').value = t(k.k+'t');
+  renderKartice();
+  osveziCTA();
+});
+
+const DANI = {
+  sr:['Ned','Pon','Uto','Sre','Čet','Pet','Sub'],
+  en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+};
+const MESECI = {
+  sr:['januar','februar','mart','april','maj','jun','jul','avgust','septembar','oktobar','novembar','decembar'],
+  en:['January','February','March','April','May','June','July','August','September','October','November','December']
+};
+
+function sledecihSest(){
+  const lista = [], d = new Date();
+  d.setHours(0,0,0,0);
+  while(lista.length < 6){
+    d.setDate(d.getDate()+1);
+    if(d.getDay() !== 0) lista.push(new Date(d));
+  }
+  return lista;
+}
+const dani = sledecihSest();
+
+function punDatum(d){
+  return LANG==='en'
+    ? `${DANI.en[d.getDay()]}, ${MESECI.en[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`
+    : `${DANI.sr[d.getDay()]}, ${d.getDate()}. ${MESECI.sr[d.getMonth()]} ${d.getFullYear()}.`;
+}
+
+function renderDane(){
+  document.getElementById('wizDani').innerHTML = dani.map((d,i)=>`
+    <button type="button" class="wiz-chip${izbor.dan===i?' is-picked':''}" data-i="${i}">
+      <span class="wiz-chip-d">${DANI[LANG][d.getDay()]}</span>${d.getDate()}
+    </button>`).join('');
+}
+
+function renderTermine(){
+  const box = document.getElementById('wizTermini');
+  if(izbor.dan === null){
+    box.innerHTML = `<p class="wiz-empty">${t('book.pickDay')}</p>`;
+    return;
+  }
+  const d = dani[izbor.dan];
+  const sati = d.getDay()===6
+    ? ['09:30','11:00','12:30','14:00','15:30']
+    : ['09:30','11:00','12:30','14:00','15:30','17:00','18:30','20:00'];
+  const zauzeti = sati.filter((_,i)=>(d.getDate()+i)%4===0);
+
+  box.innerHTML = sati.map(v=>{
+    const z = zauzeti.includes(v);
+    return `<button type="button" class="wiz-chip${izbor.vreme===v?' is-picked':''}"
+              ${z?'disabled':''} data-t="${v}">${v}</button>`;
+  }).join('');
+}
+
+document.getElementById('wizDani').addEventListener('click', e=>{
+  const b = e.target.closest('.wiz-chip');
+  if(!b) return;
+  izbor.dan = +b.dataset.i;
+  izbor.vreme = null;
+  document.getElementById('fDatum').value = punDatum(dani[izbor.dan]);
+  document.getElementById('fVreme').value = '';
+  renderDane(); renderTermine(); osveziCTA();
+});
+
+document.getElementById('wizTermini').addEventListener('click', e=>{
+  const b = e.target.closest('.wiz-chip:not([disabled])');
+  if(!b) return;
+  izbor.vreme = b.dataset.t;
+  document.getElementById('fVreme').value = izbor.vreme;
+  renderTermine(); osveziCTA();
+});
+
+function renderSazetak(){
+  if(izbor.dan === null || !izbor.katKey) return;
+  const d = dani[izbor.dan];
+  document.getElementById('wizSazetak').innerHTML = `
+    <p class="cap">${t('book.summary')}</p>
+    <p><span class="muted">${t('book.sService')}</span> ${t(izbor.katKey+'t')}</p>
+    <p><span class="muted">${t('book.sDate')}</span> ${punDatum(d)} ${t('book.at')} ${izbor.vreme}</p>`;
+}
+
+function osveziCTA(){
+  if(salje) return;
+  let ok;
+  if      (korak===1) ok = !!izbor.kat;
+  else if (korak===2) ok = izbor.dan!==null && !!izbor.vreme;
+  else                ok = true;
+  napred.disabled = !ok;
+}
+
+function osveziWizardJezik(){
+  renderDane();
+  renderTermine();
+  if(korak===UKUPNO) renderSazetak();
+  napredTx.textContent = korak===UKUPNO ? t('book.confirm') : t('book.next');
+  if(izbor.dan !== null) document.getElementById('fDatum').value = punDatum(dani[izbor.dan]);
+  if(typeof window.osveziOtvoreniTekst==='function') window.osveziOtvoreniTekst();
+}
+
+function idiNa(n){
+  if(zakljucan || n===korak) return;
+  zakljucan = true;
+  const tren = paneli.find(p=>p.classList.contains('is-active'));
+  const sled = paneli.find(p=>+p.dataset.pane===n);
+  tren.classList.remove('is-active');
+
+  setTimeout(()=>{
+    korak = n;
+    sled.classList.add('is-active');
+    document.getElementById('wizStage').scrollTop = 0;
+    document.querySelectorAll('.wstep').forEach(st=>{
+      const i = +st.dataset.s;
+      st.classList.toggle('is-now',  i===korak);
+      st.classList.toggle('is-done', i< korak);
+    });
+    nazad.disabled = korak===1;
+    navW.style.display = korak>UKUPNO ? 'none' : '';
+    napredTx.textContent = korak===UKUPNO ? t('book.confirm') : t('book.next');
+    if(korak===UKUPNO) renderSazetak();
+    osveziCTA();
+    zakljucan = false;
+  }, 430);
+}
+
+async function posalji(){
+  const ime = document.getElementById('wIme').value.trim();
+  const tel = document.getElementById('wTel').value.trim();
+  const d   = dani[izbor.dan];
+
+  salje = true;
+  napred.disabled = true;
+  napred.classList.add('is-sending');
+  napredTx.textContent = t('book.sending');
+
+  try{
+    const odg = await fetch(forma.action, {
+      method:'POST', headers:{'Accept':'application/json'}, body:new FormData(forma)
+    });
+    if(!odg.ok) throw new Error('FormSubmit ' + odg.status);
+
+    const ms = MESECI[LANG][d.getMonth()];
+    document.getElementById('wizPotvrdaTekst').textContent = LANG==='en'
+      ? `Thank you, ${ime.split(' ')[0]}. We've noted ${t(izbor.katKey+'t').toLowerCase()} for ${ms} ${d.getDate()} at ${izbor.vreme}. We'll call you on ${tel} today to confirm.`
+      : `Hvala, ${ime.split(' ')[0]}. Zabeležili smo ${t(izbor.katKey+'t').toLowerCase()} za ${d.getDate()}. ${ms} u ${izbor.vreme}. Javljamo se na ${tel} u toku dana da potvrdimo.`;
+
+    salje = false;
+    napred.classList.remove('is-sending');
+    idiNa(UKUPNO+1);
+  }catch(err){
+    console.error(err);
+    salje = false;
+    napred.classList.remove('is-sending');
+    napred.disabled = false;
+    napredTx.textContent = t('book.confirm');
+    const g = document.getElementById('wizGreska');
+    g.textContent = t('book.errSend');
+    g.classList.remove('hidden');
+  }
+}
+
+napred.addEventListener('click', ()=>{
+  if(napred.disabled || salje) return;
+  if(korak===UKUPNO){
+    const ime = document.getElementById('wIme').value.trim();
+    const tel = document.getElementById('wTel').value.trim();
+    const g   = document.getElementById('wizGreska');
+    if(!ime || !tel){
+      g.textContent = t('book.err');
+      g.classList.remove('hidden');
+      return;
+    }
+    g.classList.add('hidden');
+    posalji();
+    return;
+  }
+  idiNa(korak+1);
+});
+
+nazad.addEventListener('click', ()=>{ if(korak>1 && !salje) idiNa(korak-1); });
+forma.addEventListener('submit', e=>e.preventDefault());
+forma.querySelectorAll('input').forEach(inp=>{
+  inp.addEventListener('keydown', e=>{
+    if(e.key==='Enter'){ e.preventDefault(); napred.click(); }
+  });
+});
+
+function probudi(){ forma.classList.add('is-awake'); }
+document.querySelectorAll('a[href="#zakazivanje"]').forEach(a=>{
+  a.addEventListener('click', ()=>setTimeout(probudi,500));
+});
+if('IntersectionObserver' in window){
+  new IntersectionObserver((e,o)=>{
+    if(e[0].isIntersecting){ probudi(); o.disconnect(); }
+  },{threshold:.35}).observe(forma);
+} else { probudi(); }
+
+/* ═══════════════════════════════════════════════════════════
+   INTERAKCIJE
+   ═══════════════════════════════════════════════════════════ */
+document.querySelectorAll('.lang button').forEach(b=>{
+  b.addEventListener('click', ()=>postaviJezik(b.dataset.lang));
+});
 
 const navEl = document.getElementById('nav');
-addEventListener('scroll', () => {
+addEventListener('scroll', ()=>{
   navEl.classList.toggle('scrolled', scrollY > 60);
 }, {passive:true});
 
 const burger  = document.getElementById('burger');
 const mobmenu = document.getElementById('mobmenu');
-burger.addEventListener('click', () => {
+burger.addEventListener('click', ()=>{
   const open = mobmenu.classList.toggle('open');
+  burger.classList.toggle('x', open);
   burger.setAttribute('aria-expanded', String(open));
 });
-document.querySelectorAll('#mobmenu a').forEach(a => {
-  a.addEventListener('click', () => {
+document.querySelectorAll('#mobmenu a').forEach(a=>{
+  a.addEventListener('click', ()=>{
     mobmenu.classList.remove('open');
+    burger.classList.remove('x');
     burger.setAttribute('aria-expanded','false');
   });
 });
 
 document.getElementById('godina').textContent = new Date().getFullYear();
+
+/* Start */
+try{
+  const sac = localStorage.getItem('mrb-lang');
+  if(sac === 'en' || sac === 'sr') LANG = sac;
+  else if((navigator.language||'').slice(0,2).toLowerCase() !== 'sr') LANG = 'en';
+}catch(e){}
+
+primeniJezik();
+osveziCTA();
+
+const io = new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+}),{threshold:.12});
+document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
